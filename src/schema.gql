@@ -1,0 +1,265 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type RefreshToken {
+  """access token of user"""
+  access_token: String
+
+  """refresh token of user"""
+  refresh_token: String
+}
+
+type UserRegisterStatusEntity {
+  id: Int!
+  name: String
+}
+
+type UserRegisterRoleEntity {
+  id: Int
+  name: String
+}
+
+type UserRegister {
+  id: Int!
+  name: String
+  email: String
+  gender: String
+  role: UserRegisterRoleEntity
+  status: UserRegisterStatusEntity
+  created_at: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AuthRegisterEntity {
+  """Auth user detail"""
+  user: UserRegister!
+}
+
+type LoginStatusEntity {
+  id: Int!
+  name: String
+}
+
+type LoginRoleEntity {
+  id: Int
+  name: String
+}
+
+type LoginEntity {
+  id: Int!
+  name: String
+  email: String
+  gender: String
+  role: LoginRoleEntity
+  status: LoginStatusEntity
+  created_at: DateTime
+  access_token: String!
+  refresh_token: String!
+}
+
+type AuthLoginEntity {
+  """Auth login user detail"""
+  user: LoginEntity
+}
+
+type Status {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Role {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Course {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Subject {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Fee {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Student {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Semester {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  status(id: Int!): Status!
+  role(id: Int!): Role!
+  course(id: Int!): Course!
+  subject(id: Int!): Subject!
+  fee(id: Int!): Fee!
+  student(id: Int!): Student!
+  semester(id: Int!): Semester!
+}
+
+type Mutation {
+  """Register user with email and password"""
+  register(register_input: RegisterUserInput!): AuthRegisterEntity!
+
+  """Login user with email and password"""
+  login(login_input: LoginUserInput!): AuthLoginEntity!
+
+  """Refresh Tokens"""
+  refreshTokens: RefreshToken!
+  createStatus(createStatusInput: CreateStatusInput!): Status!
+  updateStatus(updateStatusInput: UpdateStatusInput!): Status!
+  removeStatus(id: Int!): Status!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  removeRole(id: Int!): Role!
+  createCourse(createCourseInput: CreateCourseInput!): Course!
+  updateCourse(updateCourseInput: UpdateCourseInput!): Course!
+  removeCourse(id: Int!): Course!
+  createSubject(createSubjectInput: CreateSubjectInput!): Subject!
+  updateSubject(updateSubjectInput: UpdateSubjectInput!): Subject!
+  removeSubject(id: Int!): Subject!
+  createFee(createFeeInput: CreateFeeInput!): Fee!
+  updateFee(updateFeeInput: UpdateFeeInput!): Fee!
+  removeFee(id: Int!): Fee!
+  createStudent(createStudentInput: CreateStudentInput!): Student!
+  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
+  removeStudent(id: Int!): Student!
+  createSemester(createSemesterInput: CreateSemesterInput!): Semester!
+  updateSemester(updateSemesterInput: UpdateSemesterInput!): Semester!
+  removeSemester(id: Int!): Semester!
+}
+
+input RegisterUserInput {
+  """Name of user"""
+  name: String!
+
+  """Email of user"""
+  email: String!
+
+  """Password of user"""
+  password: String!
+
+  """Gender of user"""
+  gender: Gender!
+
+  """Role of an user"""
+  role: UserRoles!
+
+  """Status of an user"""
+  status: UserRole!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum UserRoles {
+  ADMIN
+  STUDENT
+}
+
+enum UserRole {
+  ACTIVE
+  INACTIVE
+}
+
+input LoginUserInput {
+  """Email of user"""
+  email: String!
+
+  """Password of user"""
+  password: String!
+}
+
+input CreateStatusInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateStatusInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateCourseInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCourseInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateSubjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateSubjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateFeeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateFeeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateSemesterInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateSemesterInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}

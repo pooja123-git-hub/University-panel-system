@@ -1,35 +1,44 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { Auth } from './entities/auth.entity';
-import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
 
-@Resolver(() => Auth)
+import { AuthRegisterEntity } from 'src/user/entities/register-user.entity';
+import { RegisterUserInput } from './dto/register-user.input';
+import { LoginUserInput } from './dto/login-user.input';
+import { AuthLoginEntity } from 'src/user/entities/login-user.entity';
+import { UseGuards } from '@nestjs/common';
+import { RtGuard } from './guards/rt.guard';
+import { RefreshToken } from './entities/refresh-token.entity';
+import { GetCurrentUser } from './decorators/get-current-user.decorator';
+import { CurrentUser } from 'src/user/user.decorator';
+
+@Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => Auth)
-  createAuth(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
-    return this.authService.create(createAuthInput);
+  @Mutation(() => AuthRegisterEntity, {
+    name: 'register',
+    description: 'Register user with email and password',
+  })
+  register(@Args('register_input') registerUserInput: RegisterUserInput) {
+    return this.authService.register(registerUserInput);
   }
 
-  @Query(() => [Auth], { name: 'auth' })
-  findAll() {
-    return this.authService.findAll();
+  @Mutation(() => AuthLoginEntity, {
+    name: 'login',
+    description: 'Login user with email and password',
+  })
+  login(@Args('login_input') loginInput: LoginUserInput) {
+    return this.authService.login(loginInput);
   }
-
-  @Query(() => Auth, { name: 'auth' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.authService.findOne(id);
-  }
-
-  @Mutation(() => Auth)
-  updateAuth(@Args('updateAuthInput') updateAuthInput: UpdateAuthInput) {
-    return this.authService.update(updateAuthInput.id, updateAuthInput);
-  }
-
-  @Mutation(() => Auth)
-  removeAuth(@Args('id', { type: () => Int }) id: number) {
-    return this.authService.remove(id);
+  @UseGuards(RtGuard)
+  @Mutation(() => RefreshToken, {
+    name: 'refreshTokens',
+    description: 'Refresh Tokens',
+  })
+  refreshTokens(
+    @CurrentUser() user,
+    @GetCurrentUser('refreshToken') refreshToken: string,
+  ) {
+    return this.authService.refreshToken(user, refreshToken);
   }
 }

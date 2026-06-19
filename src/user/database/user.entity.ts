@@ -3,14 +3,17 @@ import { Status } from 'src/status/database/status.entity';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   DeleteDateColumn,
   Entity,
   Index,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { Gender } from '../enums/gender.enum';
+import { Student } from 'src/student/database/student.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -32,11 +35,25 @@ export class User extends BaseEntity {
   email: string;
 
   @Column({
-    length: 8,
+    type: 'enum',
+    enum: Gender,
+    default: null,
+    nullable: true,
+  })
+  gender: Gender;
+
+  @Column({
     type: 'varchar',
     nullable: false,
   })
   password: string;
+
+  @Column({
+    length: 255,
+    type: 'varchar',
+    nullable: true,
+  })
+  refresh_token: string;
 
   @ManyToOne(() => Role, (role) => role.id, { cascade: true })
   @Index()
@@ -45,18 +62,23 @@ export class User extends BaseEntity {
   @ManyToOne(() => Status, (status) => status.id)
   status: Status;
 
-  @Column({
+  @OneToMany(() => Student, (student) => student.user)
+  student: Student[]
+
+  @CreateDateColumn({
     type: 'timestamptz',
-    default: null,
   })
+  @Index()
   created_at: Date;
 
-  @Column({
+  @UpdateDateColumn({
     type: 'timestamptz',
-    default: null,
   })
   updated_at: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({
+    type: 'timestamptz',
+    nullable: true,
+  })
   deleted_at?: Date;
 }
