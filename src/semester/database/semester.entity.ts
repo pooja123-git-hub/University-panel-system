@@ -5,6 +5,10 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  Index,
 } from 'typeorm';
 
 import { Course } from 'src/course/database/course.entity';
@@ -22,9 +26,6 @@ export class Semester {
   })
   semester_number: number;
 
-  @Column()
-  course_id: number;
-
   @ManyToOne(() => Course, (course) => course.semesters)
   @JoinColumn({ name: 'course_id' })
   course: Course;
@@ -37,4 +38,21 @@ export class Semester {
 
   @OneToMany(() => FeesStructure, (fs) => fs.semester)
   fees: FeesStructure[];
+
+   @CreateDateColumn({
+      type: 'timestamptz',
+    })
+    @Index()
+    created_at: Date;
+  
+    @UpdateDateColumn({
+      type: 'timestamptz',
+    })
+    updated_at: Date;
+  
+    @DeleteDateColumn({
+      type: 'timestamptz',
+      nullable: true,
+    })
+    deleted_at?: Date;
 }

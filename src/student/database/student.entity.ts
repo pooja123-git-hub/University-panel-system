@@ -1,4 +1,5 @@
 import { Course } from 'src/course/database/course.entity';
+import { FeesStructure } from 'src/fee/database/fee.entity';
 import { Semester } from 'src/semester/database/semester.entity';
 import { User } from 'src/user/database/user.entity';
 import {
@@ -15,20 +16,14 @@ export class Student {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100,
+  })
   name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'varchar', length: 10 })
   roll_number: string;
-
-  @Column()
-  gender: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  password: string;
 
   @Column({ nullable: true })
   marks: number;
@@ -50,6 +45,6 @@ export class Student {
   @ManyToOne(() => User, (user) => user.student)
   user: User;
 
-  //   @OneToMany(() => StudentFees, fee => fee.student)
-  //   fees: StudentFees[];
+  // @OneToMany(() => StudentFees, fee => fee.student)
+  // fees: FeesStructure[];
 }

@@ -10,7 +10,7 @@ type RefreshToken {
   refresh_token: String
 }
 
-type UserRegisterStatusEntity {
+type StatusEntity {
   id: Int!
   name: String
 }
@@ -26,7 +26,7 @@ type UserRegister {
   email: String
   gender: String
   role: UserRegisterRoleEntity
-  status: UserRegisterStatusEntity
+  status: StatusEntity
   created_at: DateTime
 }
 
@@ -77,9 +77,86 @@ type Role {
   exampleField: Int!
 }
 
-type Course {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type BooleanMessage {
+  """It is run successfully true or not."""
+  success: Boolean!
+
+  """Message of the response"""
+  message: String!
+}
+
+type GetSemesterEntity {
+  """Id of Semester"""
+  id: Int!
+
+  """Total number of semester"""
+  semester_number: Int!
+}
+
+type GetCourseEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Define of course type (UG,PG)"""
+  course_type: CourseType!
+
+  """Total semetser of course"""
+  total_semesters: Int!
+
+  """Semester details"""
+  semesters: [GetSemesterEntity!]!
+
+  """Status of course"""
+  status: StatusEntity!
+}
+
+enum CourseType {
+  UG
+  PG
+}
+
+type AdminGetCourseEntity {
+  """Courses Detail with semester"""
+  result: GetCourseEntity
+}
+
+type GetSemestersEntity {
+  """Id of Semester"""
+  id: Int!
+
+  """Total number of semester"""
+  semester_number: Int!
+}
+
+type GetCoursesEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Define of course type (UG,PG)"""
+  course_type: CourseType!
+
+  """Total semetser of course"""
+  total_semesters: Int!
+
+  """Semester details"""
+  semesters: [GetSemestersEntity!]!
+
+  """Status of course"""
+  status: StatusEntity!
+}
+
+type AdminListCourseEntity {
+  """Courses Detail with semester"""
+  list_course: [GetCoursesEntity!]
+
+  """Count of course"""
+  count: Int
 }
 
 type Subject {
@@ -105,11 +182,35 @@ type Semester {
 type Query {
   status(id: Int!): Status!
   role(id: Int!): Role!
-  course(id: Int!): Course!
+
+  """admin get the Course."""
+  adminGetCourse(admin_get_course_input: AdminGetCourseInput!): AdminGetCourseEntity!
+
+  """admin list the Course."""
+  adminListCourse(admin_list_course_input: AdminListCourseInput!): AdminListCourseEntity!
   subject(id: Int!): Subject!
   fee(id: Int!): Fee!
   student(id: Int!): Student!
   semester(id: Int!): Semester!
+}
+
+input AdminGetCourseInput {
+  """Id of course """
+  course_id: Int!
+}
+
+input AdminListCourseInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search the custom notification."""
+  search: String
 }
 
 type Mutation {
@@ -127,9 +228,12 @@ type Mutation {
   createRole(createRoleInput: CreateRoleInput!): Role!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
   removeRole(id: Int!): Role!
-  createCourse(createCourseInput: CreateCourseInput!): Course!
-  updateCourse(updateCourseInput: UpdateCourseInput!): Course!
-  removeCourse(id: Int!): Course!
+
+  """Create course by admin"""
+  adminCreateCourse(create_course_input: AdminCreateCourseInput!): BooleanMessage!
+
+  """Delete course by admin"""
+  adminDeleteCourse(delete_course_input: AdminDeleteCourseInput!): BooleanMessage!
   createSubject(createSubjectInput: CreateSubjectInput!): Subject!
   updateSubject(updateSubjectInput: UpdateSubjectInput!): Subject!
   removeSubject(id: Int!): Subject!
@@ -209,15 +313,23 @@ input UpdateRoleInput {
   id: Int!
 }
 
-input CreateCourseInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input AdminCreateCourseInput {
+  """Course Name"""
+  course_name: String!
+
+  """Status id of course."""
+  status: Int!
+
+  """Type of courses"""
+  course_type: CourseType!
+
+  """Total Semester contain in one course"""
+  total_semester: Int!
 }
 
-input UpdateCourseInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input AdminDeleteCourseInput {
+  """Id of course """
+  course_id: Int!
 }
 
 input CreateSubjectInput {

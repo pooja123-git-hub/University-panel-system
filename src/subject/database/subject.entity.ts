@@ -14,20 +14,20 @@ export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: false,
+  })
   subject_name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'varchar', length: 10 })
   subject_code: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   credits: number;
-
-  @Column()
-  course_id: number;
-
-  @Column()
-  semester_id: number;
 
   @ManyToOne(() => Course, (course) => course.subjects)
   @JoinColumn({ name: 'course_id' })

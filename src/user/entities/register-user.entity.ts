@@ -3,7 +3,7 @@ import { Gender } from '../enums/gender.enum';
 import { Type } from 'class-transformer';
 
 @ObjectType()
-export class UserRegisterStatusEntity {
+export class StatusEntity {
   @Field(() => Int)
   id: number;
 
@@ -37,8 +37,8 @@ export class UserRegister {
   @Field(() => UserRegisterRoleEntity, { nullable: true })
   role: UserRegisterRoleEntity;
 
-  @Field(() => UserRegisterStatusEntity, { nullable: true })
-  status: UserRegisterStatusEntity;
+  @Field(() => StatusEntity, { nullable: true })
+  status: StatusEntity;
 
   @Field({ nullable: true })
   created_at: Date;
