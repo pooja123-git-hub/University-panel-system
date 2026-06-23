@@ -11,11 +11,13 @@ import { AdminGetCourseInput } from '../dto/admin/admin-get-course.input';
 import { AdminListCourseEntity } from '../entities/admin/admin-list-course.entity';
 import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
+import { AdminUpdateCourseInput } from '../dto/admin/admin-update-course.input';
 
 @UseGuards(AtGuard, PermissionGuard())
 @Resolver(() => Course)
 export class AdminCourseResolver {
   constructor(private readonly adminCourseService: AdminCourseService) {}
+
   // 1.AdminCreateCourse
   @Mutation(() => BooleanMessage, {
     name: 'adminCreateCourse',
@@ -26,6 +28,7 @@ export class AdminCourseResolver {
   ) {
     return this.adminCourseService.adminCreateCourse(adminCreateCourseInput);
   }
+
   // 2.AdminGetCourse
   @Query(() => AdminGetCourseEntity, {
     name: 'adminGetCourse',
@@ -36,6 +39,7 @@ export class AdminCourseResolver {
   ): Promise<AdminGetCourseEntity> {
     return this.adminCourseService.adminGetCourse(adminGetCourseInput);
   }
+
   // 3.AdminListCourse
   @Query(() => AdminListCourseEntity, {
     name: 'adminListCourse',
@@ -46,7 +50,18 @@ export class AdminCourseResolver {
   ): Promise<AdminListCourseEntity> {
     return this.adminCourseService.adminListCourse(adminListCourseInput);
   }
-  // 4.AdminDeleteCourse
+  
+  // 4.AdminUpdateCourse
+  @Mutation(() => BooleanMessage, {
+    name: 'adminUpdateCourse',
+    description: 'update course by admin',
+  })
+  async adminUpdateCourse(
+    @Args('update_course_input') adminUpdateCourseInput: AdminUpdateCourseInput,
+  ) {
+    return this.adminCourseService.adminUpdateCourse(adminUpdateCourseInput);
+  }
+  // 5.AdminDeleteCourse
   @Mutation(() => BooleanMessage, {
     name: 'adminDeleteCourse',
     description: 'Delete course by admin',

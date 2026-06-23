@@ -9,6 +9,7 @@ import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { AdminListCourseEntity } from '../entities/admin/admin-list-course.entity';
 import { AdminListCourseResponse } from '../response/admin/admin-list-course.response';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
+import { AdminUpdateCourseInput } from '../dto/admin/admin-update-course.input';
 
 @Injectable()
 export class AdminCourseService {
@@ -64,7 +65,27 @@ export class AdminCourseService {
       count: count,
     });
   }
-  // adminDeleteCourse
+
+  /**
+   * @description Admin Update Course
+   * @param adminUpdateCourseInput
+   * @returns
+   */
+  async adminUpdateCourse(
+    adminUpdateCourseInput: AdminUpdateCourseInput,
+  ): Promise<BooleanMessage> {
+    await this.courseRepository.adminUpdateCourse(adminUpdateCourseInput);
+    const response = new BooleanMessage();
+    response.success = true;
+    response.message = 'Course updated successfully';
+    return response;
+  }
+
+  /**
+   * @description Delete course by Admin
+   * @param adminDeleteCourseInput
+   * @returns
+   */
   async adminDeleteCourse(
     adminDeleteCourseInput: AdminDeleteCourseInput,
   ): Promise<BooleanMessage> {

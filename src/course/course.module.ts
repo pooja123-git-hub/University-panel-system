@@ -10,9 +10,10 @@ import { Course } from './database/course.entity';
 import { Status } from 'src/status/database/status.entity';
 import { Semester } from 'src/semester/database/semester.entity';
 import { Role } from 'src/role/database/role.entity';
+import { CourseRepository } from './repositories/course.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Course, Status, Semester, Role])],
-  providers: [AdminCourseResolver, AdminCourseService, AdminCourseRepository],
+  providers: [AdminCourseResolver, AdminCourseService, AdminCourseRepository,CourseResolver,CourseService,CourseRepository],
 })
 export class CourseModule {}

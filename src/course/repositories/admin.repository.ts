@@ -15,6 +15,7 @@ import { AdminGetCourseEntity } from '../entities/admin/admin-get-course.entity'
 import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
 import { AppDataSource } from 'app-data-source';
+import { AdminUpdateCourseInput } from '../dto/admin/admin-update-course.input';
 
 @Injectable()
 export class AdminCourseRepository {
@@ -100,6 +101,7 @@ export class AdminCourseRepository {
     const result = await query.getOne();
     return result;
   }
+
   /**
    * @description adminListCourse
    * @param adminListCourseInput
@@ -135,8 +137,91 @@ export class AdminCourseRepository {
     // console.log(list);
     return list;
   }
-  // update
-  
+
+  /**
+   * @description Admin Update Course
+   * @param adminUpdateCourseInput
+   * @returns
+   */
+  async adminUpdateCourse(
+    adminUpdateCourseInput: AdminUpdateCourseInput,
+  ): Promise<Course> {
+    const queryRunner = AppDataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const course = await queryRunner.manager.findOne(Course, {
+        where: { id: adminUpdateCourseInput.course_id },
+        relations: {
+          semesters: true,
+          status: true,
+        },
+      });
+
+      if (!course) {
+        throw new NotFoundException('Course not found');
+      }
+
+      const status = await queryRunner.manager.findOne(Status, {
+        where: { id: adminUpdateCourseInput.status },
+      });
+
+      if (!status) {
+        throw new NotFoundException('Status not found');
+      }
+
+      const oldSemesterCount = course.total_semesters;
+      const newSemesterCount = adminUpdateCourseInput.total_semester;
+
+      course.course_name = adminUpdateCourseInput.course_name;
+      course.course_type = adminUpdateCourseInput.course_type;
+      course.total_semesters = newSemesterCount;
+      course.status = status;
+
+      await queryRunner.manager.save(course);
+
+      // Add new semesters
+      if (newSemesterCount > oldSemesterCount) {
+        const semesters: Semester[] = [];
+
+        for (let i = oldSemesterCount + 1; i <= newSemesterCount; i++) {
+          const semester = new Semester();
+          semester.semester_number = i;
+          semester.course = course;
+
+          semesters.push(semester);
+        }
+
+        await queryRunner.manager.save(semesters);
+      }
+
+      // Remove extra semesters
+      if (newSemesterCount < oldSemesterCount) {
+        await queryRunner.manager
+          .createQueryBuilder()
+          .delete()
+          .from(Semester)
+          .where('course_id = :courseId', {
+            courseId: course.id,
+          })
+          .andWhere('semester_number > :semesterNumber', {
+            semesterNumber: newSemesterCount,
+          })
+          .execute();
+      }
+
+      await queryRunner.commitTransaction();
+
+      return course;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
 
   /**
    * @description AdminDeleteCourse

@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCourseInput } from './dto/create-course.input';
-import { UpdateCourseInput } from './dto/update-course.input';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CourseRepository } from './repositories/course.repository';
+import { GetCourseInput } from './dto/get-course.input';
+import {  GetsCoursesEntity } from './entities/get-course.entity';
+import { AdminListCourseEntity } from './entities/admin/admin-list-course.entity';
+import { ListCourseInput } from './dto/list-course.input';
+import { GetsCourseResponse } from './response/get-course.response';
+import { ListCourseResponse } from './response/list-course.response';
+import {  ListsCourseEntity } from './entities/list-course.entity';
+
 
 @Injectable()
 export class CourseService {
-  create(createCourseInput: CreateCourseInput) {
-    return 'This action adds a new course';
-  }
+  constructor(
+        private readonly courseRepository:CourseRepository,
+    
+  ){}
 
-  findAll() {
-    return `This action returns all course`;
-  }
+    /**
+     * @description getCourse
+     * @param getCourseInput
+     * @returns
+     */
+    async getCourse(
+      getCourseInput: GetCourseInput,
+    ): Promise<GetsCoursesEntity> {
+      const course =
+        await this.courseRepository.getCourse(getCourseInput);
+  
+      if (!course) {
+        throw new NotFoundException('Course not found');
+      }
+      return GetsCourseResponse.decode({ result: course });
+    }
+  
+    /**
+     * @description getCourse
+     * @param adminListCourseInput
+     * @returns
+     */
+    async listCourse(
+      adminListCourseInput: ListCourseInput,
+    ): Promise<ListsCourseEntity> {
+      const [courses, count] =
+        await this.courseRepository.listCourse(adminListCourseInput);
+  
+      if (!courses.length) {
+        throw new NotFoundException('Course not found');
+      }
+      return ListCourseResponse.decode({
+        list_course: courses,
+        count: count,
+      });
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
-  }
-
-  update(id: number, updateCourseInput: UpdateCourseInput) {
-    return `This action updates a #${id} course`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} course`;
-  }
 }

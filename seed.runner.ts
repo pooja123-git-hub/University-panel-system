@@ -1,10 +1,10 @@
-export const seed =[
-     {
-        name: 'Status Seeder',
-        path: "src/**/status.{seed,seeder}.{js,ts}",
-    },
-    {
-        name: 'Roles Create Seeder',
-        path: "src/**/roles-create.{seed,seeder}.{js,ts}",
-    },
-]
+export const seeds = [
+  {
+    name: 'Status Seeder',
+    path: 'src/status/seeder/status.seed.ts',
+  },
+  {
+    name: 'Role Seeder',
+    path: 'src/role/seeder/role-create.seed.ts',
+  },
+];

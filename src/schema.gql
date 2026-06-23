@@ -77,6 +77,80 @@ type Role {
   exampleField: Int!
 }
 
+type GetsSemesterEntity {
+  """Id of Semester"""
+  id: Int!
+
+  """Total number of semester"""
+  semester_number: Int!
+}
+
+type GetsCourseEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Define of course type (UG,PG)"""
+  course_type: CourseType!
+
+  """Total semetser of course"""
+  total_semesters: Int!
+
+  """Semester details"""
+  semesters: [GetsSemesterEntity!]!
+
+  """Status of course"""
+  status: StatusEntity!
+}
+
+enum CourseType {
+  UG
+  PG
+}
+
+type GetsCoursesEntity {
+  """Courses Detail with semester"""
+  result: GetsCourseEntity
+}
+
+type GetsSemestersEntity {
+  """Id of Semester"""
+  id: Int!
+
+  """Total number of semester"""
+  semester_number: Int!
+}
+
+type ListCoursesEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Define of course type (UG,PG)"""
+  course_type: CourseType!
+
+  """Total semetser of course"""
+  total_semesters: Int!
+
+  """Semester details"""
+  semesters: [GetsSemestersEntity!]!
+
+  """Status of course"""
+  status: StatusEntity!
+}
+
+type ListsCourseEntity {
+  """Courses Detail with semester"""
+  list_course: [ListCoursesEntity!]
+
+  """Count of course"""
+  count: Int
+}
+
 type BooleanMessage {
   """It is run successfully true or not."""
   success: Boolean!
@@ -111,11 +185,6 @@ type GetCourseEntity {
 
   """Status of course"""
   status: StatusEntity!
-}
-
-enum CourseType {
-  UG
-  PG
 }
 
 type AdminGetCourseEntity {
@@ -188,6 +257,12 @@ type Query {
 
   """admin list the Course."""
   adminListCourse(admin_list_course_input: AdminListCourseInput!): AdminListCourseEntity!
+
+  """ get the Course."""
+  getCourse(get_course_input: GetCourseInput!): GetsCoursesEntity!
+
+  """ list the Course."""
+  listCourse(admin_list_course_input: ListCourseInput!): ListsCourseEntity!
   subject(id: Int!): Subject!
   fee(id: Int!): Fee!
   student(id: Int!): Student!
@@ -200,6 +275,25 @@ input AdminGetCourseInput {
 }
 
 input AdminListCourseInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search the custom notification."""
+  search: String
+}
+
+input GetCourseInput {
+  """Id of course """
+  course_id: Int!
+}
+
+input ListCourseInput {
   """No. of record which are skip."""
   skip: Int!
 
@@ -231,6 +325,9 @@ type Mutation {
 
   """Create course by admin"""
   adminCreateCourse(create_course_input: AdminCreateCourseInput!): BooleanMessage!
+
+  """update course by admin"""
+  adminUpdateCourse(update_course_input: AdminUpdateCourseInput!): BooleanMessage!
 
   """Delete course by admin"""
   adminDeleteCourse(delete_course_input: AdminDeleteCourseInput!): BooleanMessage!
@@ -325,6 +422,23 @@ input AdminCreateCourseInput {
 
   """Total Semester contain in one course"""
   total_semester: Int!
+}
+
+input AdminUpdateCourseInput {
+  """Course Name"""
+  course_name: String!
+
+  """Status id of course."""
+  status: Int!
+
+  """Type of courses"""
+  course_type: CourseType!
+
+  """Total Semester contain in one course"""
+  total_semester: Int!
+
+  """Course Id"""
+  course_id: Int!
 }
 
 input AdminDeleteCourseInput {
