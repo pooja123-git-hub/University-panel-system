@@ -14,6 +14,13 @@ import { CourseRepository } from './repositories/course.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Course, Status, Semester, Role])],
-  providers: [AdminCourseResolver, AdminCourseService, AdminCourseRepository,CourseResolver,CourseService,CourseRepository],
+  providers: [
+    AdminCourseResolver,
+    AdminCourseService,
+    AdminCourseRepository,
+    CourseResolver,
+    CourseService,
+    CourseRepository,
+  ],
 })
 export class CourseModule {}

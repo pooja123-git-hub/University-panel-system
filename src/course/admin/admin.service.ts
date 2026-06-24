@@ -10,10 +10,14 @@ import { AdminListCourseEntity } from '../entities/admin/admin-list-course.entit
 import { AdminListCourseResponse } from '../response/admin/admin-list-course.response';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
 import { AdminUpdateCourseInput } from '../dto/admin/admin-update-course.input';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AdminCourseService {
-  constructor(private readonly courseRepository: AdminCourseRepository) {}
+  constructor(
+    private readonly courseRepository: AdminCourseRepository,
+    private readonly i18n: I18nService,
+  ) {}
   /**
    * @description admin create course
    * @param adminCreateCourseInput
@@ -25,7 +29,7 @@ export class AdminCourseService {
     await this.courseRepository.adminCreateCourse(adminCreateCourseInput);
     const response = new BooleanMessage();
     response.success = true;
-    response.message = 'Course created successfully';
+    response.message = this.i18n.t('course.COURSE_CREATED_SUCCESSFULLY');
     return response;
   }
 
@@ -41,7 +45,7 @@ export class AdminCourseService {
       await this.courseRepository.adminGetCourse(adminGetCourseInput);
 
     if (!course) {
-      throw new NotFoundException('Course not found');
+      throw new NotFoundException(this.i18n.t('course.COURSE_NOT_FOUND'));
     }
     return AdminGetCourseResponse.decode({ result: course });
   }
@@ -57,9 +61,9 @@ export class AdminCourseService {
     const [courses, count] =
       await this.courseRepository.adminListCourse(adminListCourseInput);
 
-    if (!courses.length) {
-      throw new NotFoundException('Course not found');
-    }
+    if (!courses.length)
+      throw new NotFoundException(this.i18n.t('course.COURSE_NOT_FOUND'));
+
     return AdminListCourseResponse.decode({
       list_course: courses,
       count: count,
@@ -77,7 +81,7 @@ export class AdminCourseService {
     await this.courseRepository.adminUpdateCourse(adminUpdateCourseInput);
     const response = new BooleanMessage();
     response.success = true;
-    response.message = 'Course updated successfully';
+    response.message = this.i18n.t('course.COURSE_UPDATED_SUCCESSFULLY');
     return response;
   }
 
@@ -94,7 +98,8 @@ export class AdminCourseService {
     );
     const response = new BooleanMessage();
     response.success = true;
-    response.message = 'Course Deleted successfully';
+    response.message = this.i18n.t('course.COURSE_DELETED_SUCCESSFULLY');
+
     return response;
   }
 }

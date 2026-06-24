@@ -25,6 +25,7 @@ export class Course {
     type: 'varchar',
     length: 100,
     nullable: false,
+    unique: true,
   })
   course_name: string;
 

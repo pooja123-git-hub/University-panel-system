@@ -96,7 +96,7 @@ export class AdminCourseRepository {
       .leftJoin('course.status', 'status')
       .leftJoin('course.semesters', 'semesters')
       .where('course.id=:courseId', {
-        courseId: adminGetCourseInput.course_id,
+        courseId: adminGetCourseInput.courseId,
       });
     const result = await query.getOne();
     return result;
@@ -234,18 +234,18 @@ export class AdminCourseRepository {
     await queryRunner.startTransaction();
     try {
       const course = await this.courseRepository.findOne({
-        where: { id: adminDeleteCourseInput.course_id },
+        where: { id: adminDeleteCourseInput.courseId },
         relations: { semesters: true },
       });
       if (!course) {
         throw new NotFoundException('Course not Found');
       }
       await queryRunner.manager.softDelete(Semester, {
-        course: { id: adminDeleteCourseInput.course_id },
+        course: { id: adminDeleteCourseInput.courseId },
       });
 
       await queryRunner.manager.softDelete(Course, {
-        id: adminDeleteCourseInput.course_id,
+        id: adminDeleteCourseInput.courseId,
       });
       await queryRunner.commitTransaction();
     } catch (err) {

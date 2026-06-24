@@ -1,0 +1,7 @@
+{
+  "COURSE_NOT_FOUND": "Course not found",
+  "COURSE_NAME_NOT_FOUND":"Course name is invalid",
+  "COURSE_CREATED_SUCCESSFULLY": "Course created successfully",
+  "COURSE_UPDATED_SUCCESSFULLY": "Course updated successfully",
+  "COURSE_DELETED_SUCCESSFULLY": "Course Deleted successfully"
+}

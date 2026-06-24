@@ -228,9 +228,162 @@ type AdminListCourseEntity {
   count: Int
 }
 
-type Subject {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type GetCourseDetailsEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetSemesterDetailsEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetsSubjectEntity {
+  """Id of subject"""
+  id: Int!
+
+  """Name of subject"""
+  subject_name: String!
+
+  """Subject code"""
+  subject_code: String!
+
+  """Credit of subject"""
+  credits: Int!
+
+  """Semester details"""
+  semesters: GetSemesterDetailsEntity
+
+  """Course details"""
+  course: GetCourseDetailsEntity
+}
+
+type GetSubjectsEntity {
+  """Subject details"""
+  subject: GetsSubjectEntity!
+}
+
+type ListCourseDetailsEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type ListSemesterDetailsEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type ListsSubjectEntity {
+  """Id of subject"""
+  id: Int!
+
+  """Name of subject"""
+  subject_name: String!
+
+  """Subject code"""
+  subject_code: String!
+
+  """Credit of subject"""
+  credits: Int!
+
+  """Semester details"""
+  semesters: ListSemesterDetailsEntity
+
+  """Course details"""
+  course: ListCourseDetailsEntity
+}
+
+type ListSubjectsEntity {
+  """Subject details"""
+  subject: [ListsSubjectEntity!]!
+
+  """Count of subject"""
+  count: Float!
+}
+
+type GetCourseDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetSemesterDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetSubjectEntity {
+  """Id of subject"""
+  id: Int!
+
+  """Name of subject"""
+  subject_name: String!
+
+  """Subject code"""
+  subject_code: String!
+
+  """Credit of subject"""
+  credits: Int!
+
+  """Semester details"""
+  semesters: GetSemesterDetailEntity
+
+  """Course details"""
+  course: GetCourseDetailEntity
+}
+
+type AdminGetSubjectEntity {
+  """Subject details"""
+  subject: GetSubjectEntity!
+}
+
+type ListCourseDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type ListSemesterDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type ListSubjectEntity {
+  """Id of subject"""
+  id: Int!
+
+  """Name of subject"""
+  subject_name: String!
+
+  """Subject code"""
+  subject_code: String!
+
+  """Credit of subject"""
+  credits: Int!
+
+  """Semester details"""
+  semesters: ListSemesterDetailEntity
+
+  """Course details"""
+  course: ListCourseDetailEntity
+}
+
+type AdminListSubjectEntity {
+  """Subject details"""
+  subject: [ListSubjectEntity!]!
+
+  """Count of subject"""
+  count: Float!
 }
 
 type Fee {
@@ -263,7 +416,18 @@ type Query {
 
   """ list the Course."""
   listCourse(admin_list_course_input: ListCourseInput!): ListsCourseEntity!
-  subject(id: Int!): Subject!
+
+  """ get the subject."""
+  getSubject(get_subject_input: GetSubjectInput!): GetSubjectsEntity!
+
+  """ list the subject."""
+  listSubject(list_subject_input: ListSubjectInput!): ListSubjectsEntity!
+
+  """admin get the subject."""
+  adminGetSubject(admin_get_subject_input: AdminGetSubjectInput!): AdminGetSubjectEntity!
+
+  """admin list the subject."""
+  adminListSubject(admin_list_subject_input: AdminListSubjectInput!): AdminListSubjectEntity!
   fee(id: Int!): Fee!
   student(id: Int!): Student!
   semester(id: Int!): Semester!
@@ -271,7 +435,7 @@ type Query {
 
 input AdminGetCourseInput {
   """Id of course """
-  course_id: Int!
+  courseId: Int!
 }
 
 input AdminListCourseInput {
@@ -307,6 +471,44 @@ input ListCourseInput {
   search: String
 }
 
+input GetSubjectInput {
+  """Id of subject """
+  subjectId: Int!
+}
+
+input ListSubjectInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search the custom notification."""
+  search: String
+}
+
+input AdminGetSubjectInput {
+  """Id of subject """
+  subjectId: Int!
+}
+
+input AdminListSubjectInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search the custom notification."""
+  search: String
+}
+
 type Mutation {
   """Register user with email and password"""
   register(register_input: RegisterUserInput!): AuthRegisterEntity!
@@ -324,16 +526,22 @@ type Mutation {
   removeRole(id: Int!): Role!
 
   """Create course by admin"""
-  adminCreateCourse(create_course_input: AdminCreateCourseInput!): BooleanMessage!
+  adminCreateCourse(admin_create_course_input: AdminCreateCourseInput!): BooleanMessage!
 
   """update course by admin"""
-  adminUpdateCourse(update_course_input: AdminUpdateCourseInput!): BooleanMessage!
+  adminUpdateCourse(admin_update_course_input: AdminUpdateCourseInput!): BooleanMessage!
 
   """Delete course by admin"""
-  adminDeleteCourse(delete_course_input: AdminDeleteCourseInput!): BooleanMessage!
-  createSubject(createSubjectInput: CreateSubjectInput!): Subject!
-  updateSubject(updateSubjectInput: UpdateSubjectInput!): Subject!
-  removeSubject(id: Int!): Subject!
+  adminDeleteCourse(admin_delete_course_input: AdminDeleteCourseInput!): BooleanMessage!
+
+  """Create subject by admin"""
+  adminCreateSubject(admin_create_subject_input: AdminCreateSubjectInput!): BooleanMessage!
+
+  """update Subject by admin"""
+  adminUpdateSubject(admin_update_subject_input: AdminUpdateSubjectInput!): BooleanMessage!
+
+  """Delete subject by admin"""
+  adminDeleteSubject(admin_delete_course_input: AdminDeleteSubjectInput!): BooleanMessage!
   createFee(createFeeInput: CreateFeeInput!): Fee!
   updateFee(updateFeeInput: UpdateFeeInput!): Fee!
   removeFee(id: Int!): Fee!
@@ -443,18 +651,49 @@ input AdminUpdateCourseInput {
 
 input AdminDeleteCourseInput {
   """Id of course """
+  courseId: Int!
+}
+
+input AdminCreateSubjectInput {
+  """Name of subject"""
+  subject_name: String!
+
+  """Code of subject"""
+  subject_code: String!
+
+  """Credit of subject(CGPA)"""
+  credits: Int!
+
+  """Id of course"""
   course_id: Int!
+
+  """Id of Semester"""
+  semester_id: Int!
 }
 
-input CreateSubjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input AdminUpdateSubjectInput {
+  """Name of subject"""
+  subject_name: String!
+
+  """Code of subject"""
+  subject_code: String!
+
+  """Credit of subject(CGPA)"""
+  credits: Int!
+
+  """Id of course"""
+  course_id: Int!
+
+  """Id of Semester"""
+  semester_id: Int!
+
+  """Id of subject"""
+  subject_id: Int!
 }
 
-input UpdateSubjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input AdminDeleteSubjectInput {
+  """Id of subject """
+  subjectId: Int!
 }
 
 input CreateFeeInput {

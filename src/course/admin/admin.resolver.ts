@@ -24,7 +24,8 @@ export class AdminCourseResolver {
     description: 'Create course by admin',
   })
   async adminCreateCourse(
-    @Args('create_course_input') adminCreateCourseInput: AdminCreateCourseInput,
+    @Args('admin_create_course_input')
+    adminCreateCourseInput: AdminCreateCourseInput,
   ) {
     return this.adminCourseService.adminCreateCourse(adminCreateCourseInput);
   }
@@ -50,14 +51,15 @@ export class AdminCourseResolver {
   ): Promise<AdminListCourseEntity> {
     return this.adminCourseService.adminListCourse(adminListCourseInput);
   }
-  
+
   // 4.AdminUpdateCourse
   @Mutation(() => BooleanMessage, {
     name: 'adminUpdateCourse',
     description: 'update course by admin',
   })
   async adminUpdateCourse(
-    @Args('update_course_input') adminUpdateCourseInput: AdminUpdateCourseInput,
+    @Args('admin_update_course_input')
+    adminUpdateCourseInput: AdminUpdateCourseInput,
   ) {
     return this.adminCourseService.adminUpdateCourse(adminUpdateCourseInput);
   }
@@ -67,7 +69,8 @@ export class AdminCourseResolver {
     description: 'Delete course by admin',
   })
   async adminDeleteCourse(
-    @Args('delete_course_input') adminDeleteCourseInput: AdminDeleteCourseInput,
+    @Args('admin_delete_course_input')
+    adminDeleteCourseInput: AdminDeleteCourseInput,
   ) {
     return this.adminCourseService.adminDeleteCourse(adminDeleteCourseInput);
   }

@@ -45,6 +45,7 @@ export class Student {
   @ManyToOne(() => User, (user) => user.student)
   user: User;
 
-  // @OneToMany(() => StudentFees, fee => fee.student)
-  // fees: FeesStructure[];
+//   @OneToMany(() => StudentFees, fee => fee.student)
+//   fees: FeesStructure[];
+// }}
 }

@@ -7,5 +7,5 @@ export class AdminDeleteCourseInput {
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
-  course_id: number;
+  courseId: number;
 }

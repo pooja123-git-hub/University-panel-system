@@ -13,6 +13,13 @@ import { SubjectModule } from './subject/subject.module';
 import { FeeModule } from './fee/fee.module';
 import { StudentModule } from './student/student.module';
 import { SemesterModule } from './semester/semester.module';
+import {
+  AcceptLanguageResolver,
+  GraphQLWebsocketResolver,
+  HeaderResolver,
+  I18nModule,
+  QueryResolver,
+} from 'nestjs-i18n';
 
 @Module({
   imports: [
@@ -38,6 +45,20 @@ import { SemesterModule } from './semester/semester.module';
         synchronize: true,
         autoLoadEntities: true,
       }),
+    }),
+
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: join(__dirname, '../i18n'),
+        watch: true,
+      },
+      resolvers: [
+        GraphQLWebsocketResolver,
+        { use: QueryResolver, options: ['lang'] },
+        { use: HeaderResolver, options: ['lang'] },
+        AcceptLanguageResolver,
+      ],
     }),
 
     UserModule,
