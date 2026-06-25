@@ -14,6 +14,7 @@ import { Semester } from 'src/semester/database/semester.entity';
 import { Student } from 'src/student/database/student.entity';
 import { FeesStructure } from 'src/fee/database/fee.entity';
 import { JwtStrategy } from './jwt.strategy';
+import { RtStrategy } from './strategies/rt.strtegy';
 
 @Module({
   imports: [
@@ -30,6 +31,14 @@ import { JwtStrategy } from './jwt.strategy';
       FeesStructure,
     ]),
   ],
-  providers: [JwtStrategy, AuthResolver, AuthService, AuthRepository],
+  providers: [
+    JwtStrategy,
+    AuthResolver,
+    AuthService,
+    AuthRepository,
+    RtStrategy,
+    AuthService,
+  ],
+  exports: [AuthService],
 })
 export class AuthModule {}

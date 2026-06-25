@@ -31,11 +31,14 @@ export class ListFeessEntity {
   @Field(() => Int, { description: 'other fees' })
   other_fee: number;
 
+  @Field(() => Int, { description: 'total fees' })
+  total_fee: number;
+
   @Field(() => GetsSemesterFeesDetailEntity, {
     description: 'Semester details',
     nullable: true,
   })
-  semesters: GetsSemesterFeesDetailEntity;
+  semester: GetsSemesterFeesDetailEntity;
 
   @Field(() => GetsCourseFeesDetailEntity, {
     description: 'Course details',

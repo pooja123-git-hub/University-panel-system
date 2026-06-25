@@ -1,0 +1,9 @@
+{
+  "STUDENT_CREATED_SUCCESSFULLY": "Student created successfully",
+  "STUDENT_UPDATED_SUCCESSFUULY": "Student updated successfully",
+  "STUDENT_DELETED_SUCCESSFULLY": "Studnet deleted successfully",
+  "STUDENT_RECORD_EXIST": "Student Record already exist for this User ",
+  "STUDENT_ROLE_NOT_FOUND": "Student role not found",
+  "STUDENT_NOT_FOUND": "Student not found",
+  "CHECK_STUDENT_ROLE": "Selected user must have Student role"
+}

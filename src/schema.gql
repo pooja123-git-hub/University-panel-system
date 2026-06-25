@@ -255,7 +255,7 @@ type GetsSubjectEntity {
   credits: Int!
 
   """Semester details"""
-  semesters: GetSemesterDetailsEntity
+  semester: GetSemesterDetailsEntity
 
   """Course details"""
   course: GetCourseDetailsEntity
@@ -293,7 +293,7 @@ type ListsSubjectEntity {
   credits: Int!
 
   """Semester details"""
-  semesters: ListSemesterDetailsEntity
+  semester: ListSemesterDetailsEntity
 
   """Course details"""
   course: ListCourseDetailsEntity
@@ -334,7 +334,7 @@ type GetSubjectEntity {
   credits: Int!
 
   """Semester details"""
-  semesters: GetSemesterDetailEntity
+  semester: GetSemesterDetailEntity
 
   """Course details"""
   course: GetCourseDetailEntity
@@ -372,7 +372,7 @@ type ListSubjectEntity {
   credits: Int!
 
   """Semester details"""
-  semesters: ListSemesterDetailEntity
+  semester: ListSemesterDetailEntity
 
   """Course details"""
   course: ListCourseDetailEntity
@@ -419,7 +419,7 @@ type GetsFeesEntity {
   total_fee: Int!
 
   """Semester details"""
-  semesters: GetSemesterFeesDetailEntity
+  semester: GetSemesterFeesDetailEntity
 
   """Course details"""
   course: GetCourseFeesDetailEntity
@@ -459,8 +459,11 @@ type ListFeessEntity {
   """other fees"""
   other_fee: Int!
 
+  """total fees"""
+  total_fee: Int!
+
   """Semester details"""
-  semesters: GetsSemesterFeesDetailEntity
+  semester: GetsSemesterFeesDetailEntity
 
   """Course details"""
   course: GetsCourseFeesDetailEntity
@@ -507,7 +510,7 @@ type GetFeesEntity {
   total_fee: Int!
 
   """Semester details"""
-  semesters: GetSemesterFeeDetailEntity
+  semester: GetSemesterFeeDetailEntity
 
   """Course details"""
   course: GetCourseFeeDetailEntity
@@ -548,7 +551,7 @@ type ListFeesEntity {
   other_fee: Int!
 
   """Semester details"""
-  semesters: GetsSemesterFeeDetailEntity
+  semester: GetsSemesterFeeDetailEntity
 
   """Course details"""
   course: GetsCourseFeeDetailEntity
@@ -562,14 +565,131 @@ type AdminListFeeEntity {
   count: Int!
 }
 
-type Student {
+type Semester {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-type Semester {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type GetStudentCourseFeeDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetStudentSemesterFeeDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetUserInfoEntity {
+  id: Int!
+  name: String
+  email: String
+  gender: String
+  role: UserRegisterRoleEntity
+  status: StatusEntity
+  created_at: DateTime
+}
+
+type GetStudentEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """Grade point of student"""
+  grade_points: Int!
+
+  """marks of student"""
+  marks: Int!
+
+  """Result status"""
+  result: ResultEnum!
+
+  """User info"""
+  user: GetUserInfoEntity
+
+  """Course assigned to student"""
+  course: GetStudentCourseFeeDetailEntity
+
+  """Semester of course"""
+  semester: GetStudentSemesterFeeDetailEntity
+}
+
+enum ResultEnum {
+  PASS
+  FAIL
+}
+
+type AdminGetStudentEntity {
+  """Admin get the student detail"""
+  student: GetStudentEntity
+}
+
+type GetStudentsCourseFeeDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetStudentsSemesterFeeDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetUsersInfoEntity {
+  id: Int!
+  name: String
+  email: String
+  gender: String
+  role: UserRegisterRoleEntity
+  status: StatusEntity
+  created_at: DateTime
+}
+
+type GetStudentsEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """Grade point of student"""
+  grade_points: Int!
+
+  """marks of student"""
+  marks: Int!
+
+  """Result status"""
+  result: ResultEnum!
+
+  """User info"""
+  user: GetUsersInfoEntity
+
+  """Course assigned to student"""
+  course: GetStudentsCourseFeeDetailEntity
+
+  """Semester of course"""
+  semester: GetStudentsSemesterFeeDetailEntity
+}
+
+type AdminListStudentEntity {
+  """Admin get the student detail"""
+  student: [GetStudentsEntity!]
+
+  """Count of total student"""
+  count: Int!
 }
 
 type Query {
@@ -611,7 +731,12 @@ type Query {
 
   """admin list the fees."""
   adminListFees(admin_list_fees_input: AdminListFeesInput!): AdminListFeeEntity!
-  student(id: Int!): Student!
+
+  """ admin  get the student detail."""
+  adminGetStudent(admin_get_subject_input: AdminGetStudentInput!): AdminGetStudentEntity!
+
+  """ admin  list the student detail."""
+  adminListStudent(admin_get_subject_input: AdminListStudentInput!): AdminListStudentEntity!
   semester(id: Int!): Semester!
 }
 
@@ -729,6 +854,25 @@ input AdminListFeesInput {
   search: String
 }
 
+input AdminGetStudentInput {
+  """Id of student """
+  studentId: Int!
+}
+
+input AdminListStudentInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search for better result."""
+  search: String
+}
+
 type Mutation {
   """Register user with email and password"""
   register(register_input: RegisterUserInput!): AuthRegisterEntity!
@@ -771,9 +915,9 @@ type Mutation {
 
   """Delete fees by admin"""
   adminDeleteFees(admin_delete_fees_input: AdminDeleteFeesInput!): BooleanMessage!
-  createStudent(createStudentInput: CreateStudentInput!): Student!
-  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
-  removeStudent(id: Int!): Student!
+
+  """Create student by admin"""
+  adminCreateStudent(admin_create_fees_input: AdminCreateStudentInput!): BooleanMessage!
   createSemester(createSemesterInput: CreateSemesterInput!): Semester!
   updateSemester(updateSemesterInput: UpdateSemesterInput!): Semester!
   removeSemester(id: Int!): Semester!
@@ -970,15 +1114,45 @@ input AdminDeleteFeesInput {
   feesId: Int!
 }
 
-input CreateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
+input AdminCreateStudentInput {
+  """Roll Id of Student"""
+  roll_number: String!
 
-input UpdateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """Marks of Student"""
+  marks: Int!
+
+  """Grade point of student"""
+  grade_points: Int!
+
+  """Result of student"""
+  result: ResultEnum!
+
+  """user Id"""
+  user_id: Int
+
+  """Name of user"""
+  name: String
+
+  """Email of user"""
+  email: String
+
+  """Password of user"""
+  password: String
+
+  """Gender of user"""
+  gender: Gender
+
+  """Status of an user"""
+  status: UserRole
+
+  """Role of an user"""
+  role: UserRoles = STUDENT
+
+  """Course Id (Assigned to user)"""
+  course_id: Int!
+
+  """Semester Id"""
+  semester_id: Int!
 }
 
 input CreateSemesterInput {

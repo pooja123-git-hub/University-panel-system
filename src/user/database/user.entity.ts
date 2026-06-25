@@ -9,6 +9,7 @@ import {
   Index,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -62,7 +63,7 @@ export class User extends BaseEntity {
   @ManyToOne(() => Status, (status) => status.id)
   status: Status;
 
-  @OneToMany(() => Student, (student) => student.user)
+  @OneToOne(() => Student, (student) => student.user)
   student: Student[]
 
   @CreateDateColumn({

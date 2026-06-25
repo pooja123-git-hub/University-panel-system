@@ -22,13 +22,13 @@ import {
 import {
   AuthRegisterResponse,
   RegisterResponse,
-} from 'src/user/response/register.response.entity';
+} from 'src/user/response/register.response';
 import { LoginUserInput } from './dto/login-user.input';
 import {
   AuthLoginEntity,
   LoginEntity,
 } from 'src/user/entities/login-user.entity';
-import { AuthLoginResponse } from 'src/user/response/login.response.entity';
+import { AuthLoginResponse } from 'src/user/response/login.response';
 import { RefreshToken } from './entities/refresh-token.entity';
 
 @Injectable()

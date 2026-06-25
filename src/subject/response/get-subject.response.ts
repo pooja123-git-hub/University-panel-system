@@ -13,7 +13,7 @@ export class GetSubjectResponse {
   subject_code: string;
   credits: number;
   @Type(() => GetSemesterDetailsResponse)
-  semesters: GetSemesterDetailsResponse;
+  semester: GetSemesterDetailsResponse;
   @Type(() => GetCourseDetailsResponse)
   course: GetCourseDetailsResponse;
 }

@@ -16,7 +16,7 @@ export class GetFeeResponse {
   total_fee: number;
 
   @Type(() => GetSemesterFeeDetailResponse)
-  semesters: GetSemesterFeeDetailResponse;
+  semester: GetSemesterFeeDetailResponse;
   @Type(() => GetCourseFeeDetailResponse)
   course: GetCourseFeeDetailResponse;
 }

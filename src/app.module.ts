@@ -11,7 +11,6 @@ import { RoleModule } from './role/role.module';
 import { CourseModule } from './course/course.module';
 import { SubjectModule } from './subject/subject.module';
 import { FeeModule } from './fee/fee.module';
-import { StudentModule } from './student/student.module';
 import { SemesterModule } from './semester/semester.module';
 import {
   AcceptLanguageResolver,
@@ -20,6 +19,7 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [

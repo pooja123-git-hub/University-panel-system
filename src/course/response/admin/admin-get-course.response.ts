@@ -1,6 +1,6 @@
 import { plainToInstance, Type } from 'class-transformer';
 import { CourseType } from 'src/course/enums/course.enum';
-import { GetStatusResponse } from 'src/user/response/register.response.entity';
+import { GetStatusResponse } from 'src/user/response/register.response';
 
 export class GetSemesterResponse {
   id: number;

@@ -32,7 +32,7 @@ export class ListSubjectEntity {
     description: 'Semester details',
     nullable: true,
   })
-  semesters: ListSemesterDetailEntity;
+  semester: ListSemesterDetailEntity;
 
   @Field(() => ListCourseDetailEntity, {
     description: 'Course details',

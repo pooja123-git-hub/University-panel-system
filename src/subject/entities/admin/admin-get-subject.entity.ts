@@ -32,7 +32,7 @@ export class GetSubjectEntity {
     description: 'Semester details',
     nullable: true,
   })
-  semesters: GetSemesterDetailEntity;
+  semester: GetSemesterDetailEntity;
 
   @Field(() => GetCourseDetailEntity, {
     description: 'Course details',
