@@ -198,13 +198,13 @@ export class AdminStudentRepository {
 
       await queryRunner.commitTransaction();
 
-      const tokens = await this.authService.getTokens(
-        user.id,
-        user.email,
-        user.role.id,
-      );
+      // const tokens = await this.authService.getTokens(
+      //   user.id,
+      //   user.email,
+      //   user.role.id,
+      // );
 
-      await this.authService.updateRtHash(user.id, tokens.refresh_token);
+      // await this.authService.updateRtHash(user.id, tokens.refresh_token);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw new NotFoundException(this.i18n.t('common.SOMETHING_WENT_WRONG'));
