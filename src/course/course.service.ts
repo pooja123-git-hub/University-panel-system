@@ -31,15 +31,15 @@ export class CourseService {
   }
 
   /**
-   * @description getCourse
-   * @param adminListCourseInput
+   * @description listCourse
+   * @param listCourseInput
    * @returns
    */
   async listCourse(
-    adminListCourseInput: ListCourseInput,
+    listCourseInput: ListCourseInput,
   ): Promise<ListsCourseEntity> {
     const [courses, count] =
-      await this.courseRepository.listCourse(adminListCourseInput);
+      await this.courseRepository.listCourse(listCourseInput);
 
     if (!courses.length)
       throw new NotFoundException(this.i18n.t('course.COURSE_NOT_FOUND'));

@@ -386,9 +386,180 @@ type AdminListSubjectEntity {
   count: Float!
 }
 
-type Fee {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type GetCourseFeesDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetSemesterFeesDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetsFeesEntity {
+  """Id of fees"""
+  id: Int!
+
+  """Tuition fees """
+  tuition_fee: Int!
+
+  """Exam fees"""
+  exam_fee: Int!
+
+  """library fees"""
+  library_fee: Int!
+
+  """other fees"""
+  other_fee: Int!
+
+  """total fees"""
+  total_fee: Int!
+
+  """Semester details"""
+  semesters: GetSemesterFeesDetailEntity
+
+  """Course details"""
+  course: GetCourseFeesDetailEntity
+}
+
+type GetFeeEntity {
+  """fees details"""
+  fees: GetsFeesEntity!
+}
+
+type GetsCourseFeesDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetsSemesterFeesDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type ListFeessEntity {
+  """Id of fees"""
+  id: Int!
+
+  """Tuition fees """
+  tuition_fee: Int!
+
+  """Exam fees"""
+  exam_fee: Int!
+
+  """library fees"""
+  library_fee: Int!
+
+  """other fees"""
+  other_fee: Int!
+
+  """Semester details"""
+  semesters: GetsSemesterFeesDetailEntity
+
+  """Course details"""
+  course: GetsCourseFeesDetailEntity
+}
+
+type ListsFeeEntity {
+  """fees details"""
+  fees: [ListFeessEntity!]!
+
+  """Total Fees entries count"""
+  count: Int!
+}
+
+type GetCourseFeeDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetSemesterFeeDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetFeesEntity {
+  """Id of fees"""
+  id: Int!
+
+  """Tuition fees """
+  tuition_fee: Int!
+
+  """Exam fees"""
+  exam_fee: Int!
+
+  """library fees"""
+  library_fee: Int!
+
+  """other fees"""
+  other_fee: Int!
+
+  """total fees"""
+  total_fee: Int!
+
+  """Semester details"""
+  semesters: GetSemesterFeeDetailEntity
+
+  """Course details"""
+  course: GetCourseFeeDetailEntity
+}
+
+type AdminGetFeeEntity {
+  """fees details"""
+  fees: GetFeesEntity!
+}
+
+type GetsCourseFeeDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+}
+
+type GetsSemesterFeeDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type ListFeesEntity {
+  """Id of fees"""
+  id: Int!
+
+  """Tuition fees """
+  tuition_fee: Int!
+
+  """Exam fees"""
+  exam_fee: Int!
+
+  """library fees"""
+  library_fee: Int!
+
+  """other fees"""
+  other_fee: Int!
+
+  """Semester details"""
+  semesters: GetsSemesterFeeDetailEntity
+
+  """Course details"""
+  course: GetsCourseFeeDetailEntity
+}
+
+type AdminListFeeEntity {
+  """fees details"""
+  fees: [ListFeesEntity!]!
+
+  """Total Fees entries count"""
+  count: Int!
 }
 
 type Student {
@@ -428,7 +599,18 @@ type Query {
 
   """admin list the subject."""
   adminListSubject(admin_list_subject_input: AdminListSubjectInput!): AdminListSubjectEntity!
-  fee(id: Int!): Fee!
+
+  """ get the fees."""
+  getFees(get_fees_input: GetFeesInput!): GetFeeEntity!
+
+  """ list the fees."""
+  listFees(list_fees_input: ListFeesInput!): ListsFeeEntity!
+
+  """admin get the fees."""
+  adminGetFees(admin_get_fees_input: AdminGetFeesInput!): AdminGetFeeEntity!
+
+  """admin list the fees."""
+  adminListFees(admin_list_fees_input: AdminListFeesInput!): AdminListFeeEntity!
   student(id: Int!): Student!
   semester(id: Int!): Semester!
 }
@@ -448,7 +630,7 @@ input AdminListCourseInput {
   """Pagination true or false"""
   pagination: Boolean! = true
 
-  """Search the custom notification."""
+  """Search params."""
   search: String
 }
 
@@ -509,6 +691,44 @@ input AdminListSubjectInput {
   search: String
 }
 
+input GetFeesInput {
+  """Id of fees """
+  feesId: Int!
+}
+
+input ListFeesInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search for better result."""
+  search: String
+}
+
+input AdminGetFeesInput {
+  """Id of fees """
+  feesId: Int!
+}
+
+input AdminListFeesInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search for better result."""
+  search: String
+}
+
 type Mutation {
   """Register user with email and password"""
   register(register_input: RegisterUserInput!): AuthRegisterEntity!
@@ -542,9 +762,15 @@ type Mutation {
 
   """Delete subject by admin"""
   adminDeleteSubject(admin_delete_course_input: AdminDeleteSubjectInput!): BooleanMessage!
-  createFee(createFeeInput: CreateFeeInput!): Fee!
-  updateFee(updateFeeInput: UpdateFeeInput!): Fee!
-  removeFee(id: Int!): Fee!
+
+  """Create fees by admin"""
+  adminCreateFees(admin_create_fees_input: AdminCreateFeesInput!): BooleanMessage!
+
+  """update fees by admin"""
+  adminUpdateFees(admin_update_fees_input: AdminUpdateFeesInput!): BooleanMessage!
+
+  """Delete fees by admin"""
+  adminDeleteFees(admin_delete_fees_input: AdminDeleteFeesInput!): BooleanMessage!
   createStudent(createStudentInput: CreateStudentInput!): Student!
   updateStudent(updateStudentInput: UpdateStudentInput!): Student!
   removeStudent(id: Int!): Student!
@@ -696,15 +922,52 @@ input AdminDeleteSubjectInput {
   subjectId: Int!
 }
 
-input CreateFeeInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input AdminCreateFeesInput {
+  """Tution fees"""
+  tuition_fees: Int!
+
+  """Exam fees"""
+  exam_fees: Int!
+
+  """library fees"""
+  library_fees: Int!
+
+  """other fees"""
+  other_fees: Int!
+
+  """Id of course"""
+  course_id: Int!
+
+  """Id of Semester"""
+  semester_id: Int!
 }
 
-input UpdateFeeInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input AdminUpdateFeesInput {
+  """Tution fees"""
+  tuition_fees: Int!
+
+  """Exam fees"""
+  exam_fees: Int!
+
+  """library fees"""
+  library_fees: Int!
+
+  """other fees"""
+  other_fees: Int!
+
+  """Id of course"""
+  course_id: Int!
+
+  """Id of Semester"""
+  semester_id: Int!
+
+  """Id of fees"""
+  feesId: Int!
+}
+
+input AdminDeleteFeesInput {
+  """Id of fees """
+  feesId: Int!
 }
 
 input CreateStudentInput {

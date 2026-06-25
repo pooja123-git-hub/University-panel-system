@@ -82,7 +82,7 @@ export class AdminSubjectService {
     const [subject, count] = await this.adminSubjectRepository.adminListSubject(
       adminListSubjectInput,
     );
-    if (!subject)
+    if (!subject.length)
       throw new NotFoundException(this.i18n.t('subject.SUBJECT_NOT_FOUND'));
 
     return AdminListSubjectResponse.decode({ subject: subject, count: count });

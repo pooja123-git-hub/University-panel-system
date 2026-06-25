@@ -4,8 +4,8 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { PaginationInput } from 'src/user/entities/pagination.entity';
 
 @InputType()
-export class AdminListCourseInput extends PaginationInput {
-  @Field({ nullable: true, description: 'Search params.' })
+export class ListFeesInput extends PaginationInput {
+  @Field({ nullable: true, description: 'Search for better result.' })
   @IsOptional()
   @Transform(({ value }: TransformFnParams) => (value ? value.trim() : value))
   @IsString({ message: 'Search must be string' })
