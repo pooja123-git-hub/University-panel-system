@@ -11,6 +11,7 @@ import { Role } from 'src/role/database/role.entity';
 import { User } from 'src/user/database/user.entity';
 import * as bcrypt from 'bcrypt';
 import { LoginUserInput } from '../dto/login-user.input';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AuthRepository {
@@ -22,6 +23,7 @@ export class AuthRepository {
     private statusRepository: Repository<Status>,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
+    private readonly i18n: I18nService,
   ) {}
 
   /**
@@ -34,20 +36,23 @@ export class AuthRepository {
     const status = await this.statusRepository.findOne({
       where: { id: registerUserInput.status },
     });
-    if (!status) throw new NotFoundException('Status not found');
+    if (!status) {
+      throw new NotFoundException(this.i18n.t('status.STATUS_NOT_FOUND'));
+    }
     // check role existence
 
     const role = await this.roleRepository.findOne({
       where: { id: registerUserInput.role },
     });
-    if (!role) throw new NotFoundException('Role not found');
-    // Cheeck existing Email
+    if (!role) throw new NotFoundException(this.i18n.t('role.ROLE_NOT_FOUND'));
+    // Check existing Email
     const email = await this.userRepository.findOne({
       where: {
         email: registerUserInput.email,
       },
     });
-    if (email) throw new BadRequestException('Email already exist');
+    if (email)
+      throw new BadRequestException(this.i18n.t('user.EMAIL_ALREADY_EXIST'));
 
     const saltOrRounds = 10;
     const salt = await bcrypt.genSalt(saltOrRounds);
@@ -75,12 +80,13 @@ export class AuthRepository {
       where: { email: loginUserInput.email },
       relations: { role: true, status: true },
     });
-    if (!user) throw new NotFoundException('User can not found');
+    if (!user) throw new NotFoundException(this.i18n.t('user.USER_NOT_FOUND'));
 
     if (user.status.id !== this.ACTIVE_STATUS)
-      throw new BadRequestException('User status is Inactive cannot be login');
+      throw new BadRequestException(this.i18n.t('user.INVALID_STATUS'));
 
-    if (!user.password) throw new BadRequestException('Password is not set');
+    if (!user.password)
+      throw new BadRequestException(this.i18n.t('user.PASSWORD_NOT_FOUND'));
 
     const isMatch = await bcrypt.compare(
       loginUserInput.password,
@@ -89,5 +95,4 @@ export class AuthRepository {
 
     return user;
   }
-  
 }

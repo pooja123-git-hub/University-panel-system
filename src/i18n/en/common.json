@@ -1,0 +1,5 @@
+{
+  "SOMETHING_WENT_WRONG": "Something went wrong",
+  "FORBIDDEN_ERROR": "Forbidden Unathorized error",
+  "FORBIDDEN_UNAUTHORIZATION_ERROR": "Forbidden error:Access denied"
+}

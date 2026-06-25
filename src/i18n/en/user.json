@@ -1,4 +1,6 @@
 {
-  "USER_NOT_FOUND": "USER_NOT_FOUND",
-  "EMAIL_ALREADY_EXIST": "Email already exist"
+  "USER_NOT_FOUND": "User not found",
+  "EMAIL_ALREADY_EXIST": "Email already exist",
+  "INVALID_STATUS": "User status must be active",
+  "PASSWORD_NOT_FOUND": "Password not found"
 }

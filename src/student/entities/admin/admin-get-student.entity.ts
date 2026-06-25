@@ -8,7 +8,7 @@ import {
 import { Gender } from 'src/user/enums/gender.enum';
 
 @ObjectType()
-export class GetStudentCourseFeeDetailEntity {
+export class GetStudentCourseDetailEntity {
   @Field(() => Int, { description: 'Id of course' })
   id: number;
 
@@ -20,7 +20,7 @@ export class GetStudentCourseFeeDetailEntity {
 }
 
 @ObjectType()
-export class GetStudentSemesterFeeDetailEntity {
+export class GetStudentSemesterDetailEntity {
   @Field(() => Int, { description: 'Id of Semester' })
   id: number;
 }
@@ -48,7 +48,7 @@ export class GetUserInfoEntity {
   created_at: Date;
 }
 @ObjectType()
-export class GetStudentEntity {
+export class GetStudentsEntity {
   @Field(() => Int, { description: 'Student Id' })
   id: number;
 
@@ -67,23 +67,23 @@ export class GetStudentEntity {
   @Field(() => GetUserInfoEntity, { description: 'User info', nullable: true })
   user: GetUserInfoEntity;
 
-  @Field(() => GetStudentCourseFeeDetailEntity, {
+  @Field(() => GetStudentCourseDetailEntity, {
     description: 'Course assigned to student',
     nullable: true,
   })
-  course: GetStudentCourseFeeDetailEntity;
+  course: GetStudentCourseDetailEntity;
 
-  @Field(() => GetStudentSemesterFeeDetailEntity, {
+  @Field(() => GetStudentSemesterDetailEntity, {
     description: 'Semester of course',
     nullable: true,
   })
-  semester: GetStudentSemesterFeeDetailEntity;
+  semester: GetStudentSemesterDetailEntity;
 }
 @ObjectType()
 export class AdminGetStudentEntity {
-  @Field(() => GetStudentEntity, {
+  @Field(() => GetStudentsEntity, {
     description: 'Admin get the student detail',
     nullable: true,
   })
-  student: GetStudentEntity;
+  student: GetStudentsEntity;
 }

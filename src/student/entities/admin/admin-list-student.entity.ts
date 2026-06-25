@@ -48,7 +48,7 @@ export class GetUsersInfoEntity {
   created_at: Date;
 }
 @ObjectType()
-export class GetStudentsEntity {
+export class GetsStudentsEntity {
   @Field(() => Int, { description: 'Student Id' })
   id: number;
 
@@ -81,11 +81,11 @@ export class GetStudentsEntity {
 }
 @ObjectType()
 export class AdminListStudentEntity {
-  @Field(() => [GetStudentsEntity], {
+  @Field(() => [GetsStudentsEntity], {
     description: 'Admin get the student detail',
     nullable: true,
   })
-  student: GetStudentsEntity[];
+  student: GetsStudentsEntity[];
   @Field(() => Int, { description: 'Count of total student' })
   count: number;
 }

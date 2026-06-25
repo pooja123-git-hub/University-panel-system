@@ -9,6 +9,9 @@ import { AdminGetStudentResponse } from '../response/admin/admin-get-student.res
 import { AdminListStudentInput } from '../dto/admin/admin-list-student.input';
 import { AdminListStudentEntity } from '../entities/admin/admin-list-student.entity';
 import { AdminListStudentResponse } from '../response/admin/admin-list-student.response';
+import { AdminDeleteStudentInput } from '../dto/admin/admin-delete-student.input';
+import { Student } from '../database/student.entity';
+import { AdminUpdateStudentInput } from '../dto/admin/admin-update-student.input';
 
 @Injectable()
 export class AdminStudentService {
@@ -68,5 +71,38 @@ export class AdminStudentService {
       throw new NotFoundException(this.i18n.t('student.STUDENT_NOT_FOUND'));
     }
     return AdminListStudentResponse.decode({ student: student, count: count });
+  }
+
+  /**
+   * @description Admin will update existing Student
+   * @param adminUpdateStudentInput
+   */
+  async adminUpdateStudent(
+    adminUpdateStudentInput: AdminUpdateStudentInput,
+  ): Promise<BooleanMessage> {
+    await this.adminStudentRepository.adminUpdateStudent(
+      adminUpdateStudentInput,
+    );
+
+    const response = new BooleanMessage();
+    response.success = true;
+    response.message = this.i18n.t('student.STUDENT_UPDATED_SUCCESSFUULY');
+    return response;
+  }
+  /**
+   * @description Admin can delete the student linked with user
+   * @param adminDeleteStudentInput
+   */
+  async adminDeleteStudent(
+    adminDeleteStudentInput: AdminDeleteStudentInput,
+  ): Promise<BooleanMessage> {
+    await this.adminStudentRepository.adminDeleteStudent(
+      adminDeleteStudentInput,
+    );
+
+    const response = new BooleanMessage();
+    response.success = true;
+    response.message = this.i18n.t('student.STUDENT_DELETED_SUCCESSFULLY');
+    return response;
   }
 }

@@ -1,7 +1,11 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 
 @InputType()
-export class CreateStudentInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+export class GetStudentInput {
+  @Field(() => Int, { description: 'Id of student ' })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  studentId: number;
 }

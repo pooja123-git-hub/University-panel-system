@@ -16,6 +16,7 @@ import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
 import { AppDataSource } from 'app-data-source';
 import { AdminUpdateCourseInput } from '../dto/admin/admin-update-course.input';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AdminCourseRepository {
@@ -27,6 +28,7 @@ export class AdminCourseRepository {
     @InjectRepository(Semester)
     private readonly semsesterRepository: Repository<Semester>,
     private readonly dataSource: DataSource,
+    private readonly i18n: I18nService,
   ) {}
 
   /**
@@ -67,7 +69,7 @@ export class AdminCourseRepository {
       return course;
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      throw new BadRequestException('Something Went wrong');
+      throw new NotFoundException(this.i18n.t('common.SOMETHING_WENT_WRONG'));
     } finally {
       await queryRunner.release();
     }
@@ -161,7 +163,7 @@ export class AdminCourseRepository {
       });
 
       if (!course) {
-        throw new NotFoundException('Course not found');
+        throw new NotFoundException(this.i18n.t('course.COURSE_NOT_FOUND'));
       }
 
       const status = await queryRunner.manager.findOne(Status, {
@@ -217,7 +219,7 @@ export class AdminCourseRepository {
       return course;
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      throw error;
+      throw new NotFoundException(this.i18n.t('common.SOMETHING_WENT_WRONG'));
     } finally {
       await queryRunner.release();
     }
@@ -250,7 +252,7 @@ export class AdminCourseRepository {
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      throw new BadRequestException('Something Went wrong');
+      throw new NotFoundException(this.i18n.t('common.SOMETHING_WENT_WRONG'));
     }
   }
 }

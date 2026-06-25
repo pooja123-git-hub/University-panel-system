@@ -30,6 +30,7 @@ import {
 } from 'src/user/entities/login-user.entity';
 import { AuthLoginResponse } from 'src/user/response/login.response';
 import { RefreshToken } from './entities/refresh-token.entity';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +40,7 @@ export class AuthService {
     private readonly user_reposistory: AuthRepository,
     private jwtService: JwtService,
     private config: ConfigService,
+    private i18n: I18nService,
   ) {}
 
   /**
@@ -51,7 +53,8 @@ export class AuthService {
   ): Promise<AuthRegisterEntity> {
     const user = await this.user_reposistory.register(registerUserInput);
 
-    if (!user) throw new NotFoundException('Something went wrong');
+    if (!user)
+      throw new NotFoundException(this.i18n.t('common.SOMETHING_WENT_WRONG'));
 
     const token = await this.getTokens(user.id, user.email, user.role.id);
 
@@ -81,9 +84,11 @@ export class AuthService {
       relations: { role: true, status: true },
     });
     if (!getUser || !getUser.refresh_token)
-      throw new ForbiddenException('Forbidden Unathorized error');
+      throw new ForbiddenException(this.i18n.t('common.FORBIDDEN_ERROR'));
     if (rt != getUser.refresh_token)
-      throw new ForbiddenException('Forbidden error:Access denied');
+      throw new ForbiddenException(
+        this.i18n.t('common.FORBIDDEN_UNAUTHORIZATION_ERROR'),
+      );
 
     const rolesIds = getUser.role.id;
     const tokens = await this.getTokens(user.id, getUser.email, rolesIds);

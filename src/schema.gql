@@ -570,7 +570,7 @@ type Semester {
   exampleField: Int!
 }
 
-type GetStudentCourseFeeDetailEntity {
+type GetStudentCourseDetailEntity {
   """Id of course"""
   id: Int!
 
@@ -581,7 +581,7 @@ type GetStudentCourseFeeDetailEntity {
   course_type: CourseType!
 }
 
-type GetStudentSemesterFeeDetailEntity {
+type GetStudentSemesterDetailEntity {
   """Id of Semester"""
   id: Int!
 }
@@ -596,7 +596,7 @@ type GetUserInfoEntity {
   created_at: DateTime
 }
 
-type GetStudentEntity {
+type GetStudentsEntity {
   """Student Id"""
   id: Int!
 
@@ -616,10 +616,10 @@ type GetStudentEntity {
   user: GetUserInfoEntity
 
   """Course assigned to student"""
-  course: GetStudentCourseFeeDetailEntity
+  course: GetStudentCourseDetailEntity
 
   """Semester of course"""
-  semester: GetStudentSemesterFeeDetailEntity
+  semester: GetStudentSemesterDetailEntity
 }
 
 enum ResultEnum {
@@ -629,7 +629,7 @@ enum ResultEnum {
 
 type AdminGetStudentEntity {
   """Admin get the student detail"""
-  student: GetStudentEntity
+  student: GetStudentsEntity
 }
 
 type GetStudentsCourseFeeDetailEntity {
@@ -658,7 +658,7 @@ type GetUsersInfoEntity {
   created_at: DateTime
 }
 
-type GetStudentsEntity {
+type GetsStudentsEntity {
   """Student Id"""
   id: Int!
 
@@ -686,10 +686,67 @@ type GetStudentsEntity {
 
 type AdminListStudentEntity {
   """Admin get the student detail"""
-  student: [GetStudentsEntity!]
+  student: [GetsStudentsEntity!]
 
   """Count of total student"""
   count: Int!
+}
+
+type GetsStudentCourseDetailEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetsStudentSemesterDetailEntity {
+  """Id of Semester"""
+  id: Int!
+}
+
+type GetsUserInfoEntity {
+  id: Int!
+  name: String
+  email: String
+  gender: String
+  role: UserRegisterRoleEntity
+  status: StatusEntity
+  created_at: DateTime
+}
+
+type GetsStudentEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """Grade point of student"""
+  grade_points: Int!
+
+  """marks of student"""
+  marks: Int!
+
+  """Result status"""
+  result: ResultEnum!
+
+  """User info"""
+  user: GetsUserInfoEntity
+
+  """Course assigned to student"""
+  course: GetsStudentCourseDetailEntity
+
+  """Semester of course"""
+  semester: GetsStudentSemesterDetailEntity
+}
+
+type GetStudentEntity {
+  """Admin get the student detail"""
+  student: GetsStudentEntity
 }
 
 type Query {
@@ -733,10 +790,13 @@ type Query {
   adminListFees(admin_list_fees_input: AdminListFeesInput!): AdminListFeeEntity!
 
   """ admin  get the student detail."""
-  adminGetStudent(admin_get_subject_input: AdminGetStudentInput!): AdminGetStudentEntity!
+  adminGetStudent(admin_get_student_input: AdminGetStudentInput!): AdminGetStudentEntity!
 
   """ admin  list the student detail."""
-  adminListStudent(admin_get_subject_input: AdminListStudentInput!): AdminListStudentEntity!
+  adminListStudent(admin_list_student_input: AdminListStudentInput!): AdminListStudentEntity!
+
+  """get the student detail."""
+  getStudent(get_student_input: GetStudentInput!): GetStudentEntity!
   semester(id: Int!): Semester!
 }
 
@@ -873,6 +933,11 @@ input AdminListStudentInput {
   search: String
 }
 
+input GetStudentInput {
+  """Id of student """
+  studentId: Int!
+}
+
 type Mutation {
   """Register user with email and password"""
   register(register_input: RegisterUserInput!): AuthRegisterEntity!
@@ -917,7 +982,13 @@ type Mutation {
   adminDeleteFees(admin_delete_fees_input: AdminDeleteFeesInput!): BooleanMessage!
 
   """Create student by admin"""
-  adminCreateStudent(admin_create_fees_input: AdminCreateStudentInput!): BooleanMessage!
+  adminCreateStudent(admin_create_student_input: AdminCreateStudentInput!): BooleanMessage!
+
+  """update student by admin"""
+  adminUpdateStudent(admin_update_student_input: AdminUpdateStudentInput!): BooleanMessage!
+
+  """Delete student by admin"""
+  adminDeleteStudent(admin_delete_student_input: AdminDeleteStudentInput!): BooleanMessage!
   createSemester(createSemesterInput: CreateSemesterInput!): Semester!
   updateSemester(updateSemesterInput: UpdateSemesterInput!): Semester!
   removeSemester(id: Int!): Semester!
@@ -1153,6 +1224,55 @@ input AdminCreateStudentInput {
 
   """Semester Id"""
   semester_id: Int!
+}
+
+input AdminUpdateStudentInput {
+  """Roll Id of Student"""
+  roll_number: String!
+
+  """Marks of Student"""
+  marks: Int!
+
+  """Grade point of student"""
+  grade_points: Int!
+
+  """Result of student"""
+  result: ResultEnum!
+
+  """user Id"""
+  user_id: Int
+
+  """Name of user"""
+  name: String
+
+  """Email of user"""
+  email: String
+
+  """Password of user"""
+  password: String
+
+  """Gender of user"""
+  gender: Gender
+
+  """Status of an user"""
+  status: UserRole
+
+  """Role of an user"""
+  role: UserRoles = STUDENT
+
+  """Course Id (Assigned to user)"""
+  course_id: Int!
+
+  """Semester Id"""
+  semester_id: Int!
+
+  """Student Id"""
+  student_id: Int!
+}
+
+input AdminDeleteStudentInput {
+  """Id of student """
+  studentId: Int!
 }
 
 input CreateSemesterInput {
