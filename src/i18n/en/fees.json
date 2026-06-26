@@ -2,5 +2,6 @@
   "FEES_NOT_FOUND": "Fees not found",
   "FEES_CREATED_SUCCESSFULLY": "Fees created successfully",
   "FEES_UPDATED_SUCCESSFULLY": "Fees updated successfully",
-  "FEES_DELETED_SUCEESSFULLY": "Fees deleted successfully"
+  "FEES_DELETED_SUCEESSFULLY": "Fees deleted successfully",
+  "COURSE_NOT_MATCH":"Course not match with student and fees sttructure"
 }

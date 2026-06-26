@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StudentRepository } from './repositories/student.repository';
 import { I18nService } from 'nestjs-i18n';
-import { GetStudentInput } from './dto/get-student.input';
 import { GetStudentEntity } from './entities/get-student.entity';
 import { GetStudentResponse } from './response/get-student.response';
+import { User } from 'src/user/database/user.entity';
 
 @Injectable()
 export class StudentService {
@@ -18,9 +18,9 @@ export class StudentService {
    * @returns
    */
   async getStudent(
-    getStudentInput: GetStudentInput,
+    user:User
   ): Promise<GetStudentEntity> {
-    const student = await this.studentRepository.getStudent(getStudentInput);
+    const student = await this.studentRepository.getStudent(user);
     if (!student)
       throw new NotFoundException(this.i18n.t('student.STUDENT_NOT_FOUND'));
 

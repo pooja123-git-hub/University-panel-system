@@ -1,0 +1,7 @@
+{
+  "STUDENT_FEES_CREATED_SUCCESSFULLY": "Student fees created successfully",
+  "STUDENT_FEES_UPDATED_SUCCESSFULLY": "Student fees updated successfully",
+  "STUDENT_FEES_DELETED_SUCCESSFULLY": "Student fees deleted successfully",
+  "STUDENT_FEES_NOT_FOUND":"Student fees not found",
+  "FEES_CAN_NOT_BE_EXCEED":"Amount paid can be exceed with total fees"
+}

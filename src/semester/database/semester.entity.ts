@@ -26,33 +26,35 @@ export class Semester {
   })
   semester_number: number;
 
-  @ManyToOne(() => Course, (course) => course.semesters)
+  @ManyToOne(() => Course, (course) => course.semesters, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'course_id' })
   course: Course;
 
-  @OneToMany(() => Subject, (subject) => subject.semester)
+  @OneToMany(() => Subject, (subject) => subject.semester, { cascade: true })
   subjects: Subject[];
 
-  @OneToMany(() => Student, (student) => student.semester)
+  @OneToMany(() => Student, (student) => student.semester, { cascade: true })
   student: Student[];
 
-  @OneToMany(() => FeesStructure, (fs) => fs.semester)
+  @OneToMany(() => FeesStructure, (fs) => fs.semester, { cascade: true })
   fees: FeesStructure[];
 
-   @CreateDateColumn({
-      type: 'timestamptz',
-    })
-    @Index()
-    created_at: Date;
-  
-    @UpdateDateColumn({
-      type: 'timestamptz',
-    })
-    updated_at: Date;
-  
-    @DeleteDateColumn({
-      type: 'timestamptz',
-      nullable: true,
-    })
-    deleted_at?: Date;
+  @CreateDateColumn({
+    type: 'timestamptz',
+  })
+  @Index()
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamptz',
+  })
+  updated_at: Date;
+
+  @DeleteDateColumn({
+    type: 'timestamptz',
+    nullable: true,
+  })
+  deleted_at?: Date;
 }

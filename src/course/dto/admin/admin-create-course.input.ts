@@ -5,7 +5,6 @@ import {
   IsNumber,
   IsPositive,
   IsString,
-  ValidateNested,
 } from 'class-validator';
 import { CourseType } from 'src/course/enums/course.enum';
 

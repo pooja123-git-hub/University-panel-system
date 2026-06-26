@@ -20,6 +20,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import { StudentModule } from './student/student.module';
+import { StudentFeesModule } from './student-fees/student-fees.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { StudentModule } from './student/student.module';
     FeeModule,
     StudentModule,
     SemesterModule,
+    StudentFeesModule,
   ],
 })
 export class AppModule {}

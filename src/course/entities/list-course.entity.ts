@@ -1,5 +1,4 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Type } from 'class-transformer';
 import { CourseType } from 'src/course/enums/course.enum';
 import { StatusEntity } from 'src/user/entities/register-user.entity';
 

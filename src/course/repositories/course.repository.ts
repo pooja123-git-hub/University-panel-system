@@ -1,16 +1,12 @@
 import {
-  BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from '../database/course.entity';
-import { Brackets, DataSource, Repository } from 'typeorm';
+import {  DataSource, Repository } from 'typeorm';
 import { Status } from 'src/status/database/status.entity';
 import { Semester } from 'src/semester/database/semester.entity';
-import { AdminGetCourseInput } from '../dto/admin/admin-get-course.input';
 
-import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { GetCourseInput } from '../dto/get-course.input';
 import { ListCourseInput } from '../dto/list-course.input';
 

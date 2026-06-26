@@ -8,7 +8,6 @@ import {
   Entity,
   Index,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -63,8 +62,8 @@ export class User extends BaseEntity {
   @ManyToOne(() => Status, (status) => status.id)
   status: Status;
 
-  @OneToOne(() => Student, (student) => student.user)
-  student: Student[]
+  @OneToOne(() => Student, (student) => student.user, { cascade: true })
+  student: Student;
 
   @CreateDateColumn({
     type: 'timestamptz',

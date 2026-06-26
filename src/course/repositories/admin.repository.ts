@@ -1,17 +1,14 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from '../database/course.entity';
-import { Brackets, DataSource, Repository } from 'typeorm';
+import {  DataSource, Repository } from 'typeorm';
 import { AdminCreateCourseInput } from '../dto/admin/admin-create-course.input';
 import { Status } from 'src/status/database/status.entity';
-import { isEmpty, NotFoundError } from 'rxjs';
 import { Semester } from 'src/semester/database/semester.entity';
 import { AdminGetCourseInput } from '../dto/admin/admin-get-course.input';
-import { AdminGetCourseEntity } from '../entities/admin/admin-get-course.entity';
 import { AdminListCourseInput } from '../dto/admin/admin-list-course.input';
 import { AdminDeleteCourseInput } from '../dto/admin/admin-delete-course.input';
 import { AppDataSource } from 'app-data-source';
@@ -234,6 +231,7 @@ export class AdminCourseRepository {
   ): Promise<void> {
     const queryRunner = AppDataSource.createQueryRunner();
     await queryRunner.startTransaction();
+    await queryRunner.connect()
     try {
       const course = await this.courseRepository.findOne({
         where: { id: adminDeleteCourseInput.courseId },

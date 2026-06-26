@@ -4,7 +4,6 @@ import { FeesStructure } from './database/fee.entity';
 import { UseGuards } from '@nestjs/common';
 import { AtGuard } from 'src/auth/guards/at.guard';
 import PermissionGuard from 'src/auth/guards/permission.guard';
-import { GetFeesEntity } from './entities/admin/admin-get-fees.entity';
 import { GetFeesInput } from './dto/get-fees.input';
 import { GetFeeEntity } from './entities/get-fee.entity';
 import { ListsFeeEntity } from './entities/list-fees-entity';

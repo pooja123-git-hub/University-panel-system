@@ -1,5 +1,6 @@
 import { Course } from 'src/course/database/course.entity';
 import { Semester } from 'src/semester/database/semester.entity';
+import { StudentFees } from 'src/student-fees/database/student-fee.entity';
 import {
   Entity,
   Column,
@@ -65,6 +66,13 @@ export class FeesStructure {
   @ManyToOne(() => Semester, (semester) => semester.fees)
   @JoinColumn({ name: 'semester_id' })
   semester: Semester;
+
+  @OneToMany(() => StudentFees, (studentFee) => studentFee.feeStructure, {
+  cascade: true,
+})
+studentFees: StudentFees[];
+
+
 
   @CreateDateColumn({
     type: 'timestamptz',

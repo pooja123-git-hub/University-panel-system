@@ -749,6 +749,215 @@ type GetStudentEntity {
   student: GetsStudentEntity
 }
 
+type GetsUserDetailEntity {
+  id: Int!
+  name: String
+}
+
+type GetsCourseInfoEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetsFeeStructureEntity {
+  """Id of fees"""
+  id: Int!
+
+  """total fees"""
+  total_fee: Int!
+}
+
+type GetsStudentsDeatilEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """User info"""
+  user: GetsUserDetailEntity
+
+  """Course assigned to student"""
+  course: GetsCourseInfoEntity
+}
+
+type GetStudentsFeeEntity {
+  """Id of student fees"""
+  id: Int!
+
+  """Amount paid by student"""
+  amount_paid: Int!
+
+  """Due Amount of student"""
+  due_amount: Int!
+
+  """Payment status type"""
+  payment_status: PaymentStatus!
+
+  """Payment date"""
+  payment_date: DateTime!
+
+  """Other fees details"""
+  feeStructure: GetsFeeStructureEntity
+
+  """Student info with course detail"""
+  student: GetsStudentsDeatilEntity
+}
+
+enum PaymentStatus {
+  PENDING
+  CANCELLED
+  PROCESSING
+  SUCCEEDED
+  PARTIALLY_PAID
+}
+
+type GetsStudentFeeEntity {
+  """Student fees details"""
+  studentFees: GetStudentsFeeEntity
+}
+
+type GetUserDetailEntity {
+  id: Int!
+  name: String
+}
+
+type GetCourseInfoEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetFeeStructureEntity {
+  """Id of fees"""
+  id: Int!
+
+  """total fees"""
+  total_fee: Int!
+}
+
+type GetsStudentDeatilEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """User info"""
+  user: GetUserDetailEntity
+
+  """Course assigned to student"""
+  course: GetCourseInfoEntity
+}
+
+type GetStudentFeeEntity {
+  """Id of student fees"""
+  id: Int!
+
+  """Amount paid by student"""
+  amount_paid: Int!
+
+  """Due Amount of student"""
+  due_amount: Int!
+
+  """Payment status type"""
+  payment_status: PaymentStatus!
+
+  """Payment date"""
+  payment_date: DateTime!
+
+  """Other fees details"""
+  feeStructure: GetFeeStructureEntity
+
+  """Student info with course detail"""
+  student: GetsStudentDeatilEntity
+}
+
+type AdminGetStudentFeeEntity {
+  """Student fees details"""
+  studentFees: GetStudentFeeEntity
+}
+
+type GetUsersDetailEntity {
+  id: Int!
+  name: String
+}
+
+type GetCoursesInfoEntity {
+  """Id of course"""
+  id: Int!
+
+  """Name of course"""
+  course_name: String!
+
+  """Course Type UG/PG"""
+  course_type: CourseType!
+}
+
+type GetFeesStructureEntity {
+  """Id of fees"""
+  id: Int!
+
+  """total fees"""
+  total_fee: Int!
+}
+
+type GetsStudentDeatilsEntity {
+  """Student Id"""
+  id: Int!
+
+  """Roll no of user"""
+  roll_number: String
+
+  """User info"""
+  user: GetUsersDetailEntity
+
+  """Course assigned to student"""
+  course: GetCoursesInfoEntity
+}
+
+type GetStudentFeesEntity {
+  """Id of student fees"""
+  id: Int!
+
+  """Amount paid by student"""
+  amount_paid: Int!
+
+  """Due Amount of student"""
+  due_amount: Int!
+
+  """Payment status type"""
+  payment_status: PaymentStatus!
+
+  """Payment date"""
+  payment_date: DateTime!
+
+  """Other fees details"""
+  feeStructure: GetFeesStructureEntity
+
+  """Student info with course detail"""
+  student: GetsStudentDeatilsEntity
+}
+
+type AdminListStudentFeeEntity {
+  """Student fees details"""
+  studentFees: [GetStudentFeesEntity!]
+
+  """count of total entry"""
+  count: Int
+}
+
 type Query {
   status(id: Int!): Status!
   role(id: Int!): Role!
@@ -796,8 +1005,17 @@ type Query {
   adminListStudent(admin_list_student_input: AdminListStudentInput!): AdminListStudentEntity!
 
   """get the student detail."""
-  getStudent(get_student_input: GetStudentInput!): GetStudentEntity!
+  getStudent: GetStudentEntity!
   semester(id: Int!): Semester!
+
+  """Admin can view student fees record"""
+  adminGetStudentFees(admin_get_student_fee_input: AdminGetStudentFeeInput!): AdminGetStudentFeeEntity!
+
+  """Admin can list all student fees record"""
+  adminListStudentFees(admin_list_student_fee_input: AdminListStudentFeeInput!): AdminListStudentFeeEntity!
+
+  """Admin can view student fees record"""
+  getStudentFees: GetsStudentFeeEntity!
 }
 
 input AdminGetCourseInput {
@@ -933,9 +1151,26 @@ input AdminListStudentInput {
   search: String
 }
 
-input GetStudentInput {
+input AdminGetStudentFeeInput {
   """Id of student """
   studentId: Int!
+
+  """Id of studentFee """
+  studentFeesId: Int!
+}
+
+input AdminListStudentFeeInput {
+  """No. of record which are skip."""
+  skip: Int!
+
+  """No. of record which are take(limit)."""
+  take: Int!
+
+  """Pagination true or false"""
+  pagination: Boolean! = true
+
+  """Search params."""
+  search: String
 }
 
 type Mutation {
@@ -992,6 +1227,15 @@ type Mutation {
   createSemester(createSemesterInput: CreateSemesterInput!): Semester!
   updateSemester(updateSemesterInput: UpdateSemesterInput!): Semester!
   removeSemester(id: Int!): Semester!
+
+  """admin create student fees record"""
+  adminCreateStudentFees(admin_create_student_fee_input: AdminCreateStudentFeeInput!): BooleanMessage!
+
+  """admin update student fees record"""
+  adminUpdateStudentFees(admin_update_student_fee_input: AdminUpdateStudentFeesInput!): BooleanMessage!
+
+  """admin delete student fees record"""
+  adminDeleteStudentFees(admin_delete_student_fee_input: AdminDeleteStudentFeeInput!): BooleanMessage!
 }
 
 input RegisterUserInput {
@@ -1284,4 +1528,40 @@ input UpdateSemesterInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+}
+
+input AdminCreateStudentFeeInput {
+  """Id of student"""
+  student_id: Int!
+
+  """Id of fee_struture"""
+  fee_id: Int!
+
+  """Amount paid by student"""
+  amount_paid: Int!
+
+  """Payment status type"""
+  payment_status: PaymentStatus!
+}
+
+input AdminUpdateStudentFeesInput {
+  """Id of student"""
+  student_id: Int!
+
+  """Id of fee_struture"""
+  fee_id: Int!
+
+  """Amount paid by student"""
+  amount_paid: Int!
+
+  """Payment status type"""
+  payment_status: PaymentStatus!
+
+  """Id of studentFee """
+  studentFeesId: Int!
+}
+
+input AdminDeleteStudentFeeInput {
+  """Id of student-fees """
+  studnetFeesId: Int!
 }

@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CourseRepository } from './repositories/course.repository';
 import { GetCourseInput } from './dto/get-course.input';
 import { GetsCoursesEntity } from './entities/get-course.entity';
-import { AdminListCourseEntity } from './entities/admin/admin-list-course.entity';
 import { ListCourseInput } from './dto/list-course.input';
 import { GetsCourseResponse } from './response/get-course.response';
 import { ListCourseResponse } from './response/list-course.response';

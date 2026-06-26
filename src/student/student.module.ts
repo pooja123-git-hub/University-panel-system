@@ -10,7 +10,6 @@ import { Semester } from 'src/semester/database/semester.entity';
 import { Course } from 'src/course/database/course.entity';
 import { Status } from 'src/status/database/status.entity';
 import { Role } from 'src/role/database/role.entity';
-import { AuthService } from 'src/auth/auth.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { StudentResolver } from './student.resolver';
 import { StudentRepository } from './repositories/student.repository';

@@ -1,5 +1,4 @@
 import { Course } from 'src/course/database/course.entity';
-import { FeesStructure } from 'src/fee/database/fee.entity';
 import { Semester } from 'src/semester/database/semester.entity';
 import { User } from 'src/user/database/user.entity';
 import {
@@ -16,6 +15,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 import { ResultEnum } from '../enum/result.enum';
+import { StudentFees } from 'src/student-fees/database/student-fee.entity';
 
 @Entity('students')
 export class Student {
@@ -52,9 +52,14 @@ export class Student {
   @JoinColumn({ name: 'semester_id' })
   semester: Semester;
 
-  @OneToOne(() => User, (user) => user.student)
+  @OneToOne(() => User, (user) => user.student, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => StudentFees, (studentFee) => studentFee.student, {
+    cascade: true,
+  })
+  studentFees: StudentFees[];
 
   @CreateDateColumn({
     type: 'timestamptz',

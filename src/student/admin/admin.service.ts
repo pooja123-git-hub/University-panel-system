@@ -10,7 +10,6 @@ import { AdminListStudentInput } from '../dto/admin/admin-list-student.input';
 import { AdminListStudentEntity } from '../entities/admin/admin-list-student.entity';
 import { AdminListStudentResponse } from '../response/admin/admin-list-student.response';
 import { AdminDeleteStudentInput } from '../dto/admin/admin-delete-student.input';
-import { Student } from '../database/student.entity';
 import { AdminUpdateStudentInput } from '../dto/admin/admin-update-student.input';
 
 @Injectable()

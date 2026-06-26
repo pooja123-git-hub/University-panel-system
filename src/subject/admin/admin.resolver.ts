@@ -11,7 +11,6 @@ import { AdminGetSubjectInput } from '../dto/admin/admin-get-subject-input';
 import { AdminListSubjectEntity } from '../entities/admin/admin-list-subject.entity';
 import { AdminListSubjectInput } from '../dto/admin/admin-list-subject.input';
 import { AdminDeleteSubjectInput } from '../dto/admin/admin-delete-subject.input';
-import { AdminUpdateCourseInput } from 'src/course/dto/admin/admin-update-course.input';
 import { AdminUpdateSubjectInput } from '../dto/admin/admin-update-subject.input';
 
 @UseGuards(AtGuard, PermissionGuard())

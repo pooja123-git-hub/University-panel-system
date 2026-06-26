@@ -13,20 +13,16 @@ import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Tokens } from './types/tokens.type';
 import { RegisterUserInput } from './dto/register-user.input';
-import { BooleanMessage } from 'src/user/entities/boolean-message.entity';
 import { AuthRepository } from './repositories/auth.repository';
 import {
   AuthRegisterEntity,
-  UserRegister,
 } from 'src/user/entities/register-user.entity';
 import {
   AuthRegisterResponse,
-  RegisterResponse,
 } from 'src/user/response/register.response';
 import { LoginUserInput } from './dto/login-user.input';
 import {
   AuthLoginEntity,
-  LoginEntity,
 } from 'src/user/entities/login-user.entity';
 import { AuthLoginResponse } from 'src/user/response/login.response';
 import { RefreshToken } from './entities/refresh-token.entity';

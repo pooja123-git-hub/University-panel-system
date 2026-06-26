@@ -45,16 +45,16 @@ export class Course {
   @Index()
   status: Status;
 
-  @OneToMany(() => Semester, (semester) => semester.course)
+  @OneToMany(() => Semester, (semester) => semester.course, { cascade: true })
   semesters: Semester[];
 
-  @OneToMany(() => Subject, (subject) => subject.course)
+  @OneToMany(() => Subject, (subject) => subject.course, { cascade: true })
   subjects: Subject[];
 
-  @OneToMany(() => Student, (student) => student.course)
+  @OneToMany(() => Student, (student) => student.course, { cascade: true })
   students: Student[];
 
-  @OneToMany(() => FeesStructure, (feeS) => feeS.course)
+  @OneToMany(() => FeesStructure, (feeS) => feeS.course, { cascade: true })
   fees: FeesStructure[];
 
   @CreateDateColumn({
