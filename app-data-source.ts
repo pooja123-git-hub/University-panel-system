@@ -11,14 +11,18 @@ export const AppDataSource = new DataSource({
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
+     ssl: {
+    rejectUnauthorized: false,
+  },
     entities: ["dist/**/*.entity{.ts,.js}"],
     subscribers: []
+    
 })
 
-AppDataSource.initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!")
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err)
-    })
+// AppDataSource.initialize()
+//     .then(() => {
+//         console.log("Data Source has been initialized!")
+//     })
+//     .catch((err) => {
+//         console.error("Error during Data Source initialization", err)
+//     })

@@ -34,19 +34,25 @@ import { StudentFeesModule } from './student-fees/student-fees.module';
       playground: true,
     }),
 
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: Number(configService.get('DB_PORT')),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
-        synchronize: true,
-        autoLoadEntities: true,
-      }),
-    }),
+  TypeOrmModule.forRootAsync({
+  inject: [ConfigService],
+  useFactory: (configService: ConfigService) => ({
+    type: 'postgres',
+    host: configService.get<string>('DB_HOST'),
+    port: Number(configService.get('DB_PORT')),
+    username: configService.get<string>('DB_USERNAME'),
+    password: configService.get<string>('DB_PASSWORD'),
+    database: configService.get<string>('DB_NAME'),
+    synchronize: true,
+    autoLoadEntities: true,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+    extra: {
+      sslmode: 'require',
+    },
+  }),
+}),
 
     I18nModule.forRoot({
       fallbackLanguage: 'en',

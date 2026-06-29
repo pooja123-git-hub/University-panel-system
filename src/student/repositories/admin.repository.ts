@@ -11,7 +11,7 @@ import { Course } from 'src/course/database/course.entity';
 import { Semester } from 'src/semester/database/semester.entity';
 import { AdminCreateStudentInput } from '../dto/admin/admin-create-student.input';
 import { I18nService } from 'nestjs-i18n';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'
 import { Role } from 'src/role/database/role.entity';
 import { Status } from 'src/status/database/status.entity';
 import { AuthService } from 'src/auth/auth.service';

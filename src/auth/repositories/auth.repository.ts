@@ -9,7 +9,7 @@ import { RegisterUserInput } from '../dto/register-user.input';
 import { Status } from 'src/status/database/status.entity';
 import { Role } from 'src/role/database/role.entity';
 import { User } from 'src/user/database/user.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'
 import { LoginUserInput } from '../dto/login-user.input';
 import { I18nService } from 'nestjs-i18n';
 
