@@ -21,12 +21,15 @@ import {
 } from 'nestjs-i18n';
 import { StudentModule } from './student/student.module';
 import { StudentFeesModule } from './student-fees/student-fees.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -79,5 +82,7 @@ import { StudentFeesModule } from './student-fees/student-fees.module';
     SemesterModule,
     StudentFeesModule,
   ],
+  controllers:[AppController],
+  providers:[AppService]
 })
 export class AppModule {}
