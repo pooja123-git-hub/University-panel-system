@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
     port: configService.get('DB_PORT'),
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
-    database: configService.get('DB_DATABASE'),
+    database: configService.get('DB_NAME'),
      ssl: {
     rejectUnauthorized: false,
   },
@@ -19,10 +19,10 @@ export const AppDataSource = new DataSource({
     
 })
 
-// AppDataSource.initialize()
-//     .then(() => {
-//         console.log("Data Source has been initialized!")
-//     })
-//     .catch((err) => {
-//         console.error("Error during Data Source initialization", err)
-//     })
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err)
+    })
